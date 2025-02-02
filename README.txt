@@ -17,3 +17,26 @@ Liste des corrections apportées
 - les attributs peuvent avoir le même nom dans plusiers entités différentes - Merci Mehdi Chaabani (jarikov)
 - lifting et revue sommaire de code - Merci Nicola Spanti (RyDroid)
 - corrections de bugs et robustesse
+
+----------------------
+CONSTRUIRE LE PROJET À
+PARTIR DU CODE SOURCE
+----------------------
+
+* PRÉREQUIS RECOMMANDEE *
+
+- IDE : IntelliJ IDEA
+- JDK 1.8 ou plus
+
+
+* ÉTAPES *
+- Lancez votre IDE
+- Importez le projet à partir du dossier source "AnalyseSI"
+    - sur IntelliJ IDEA : File -> Open -> selectionner le dossier source
+- Ajoutez toutes les librairies situées dans le dossier "lib"
+    - sur IntelliJ IDEA : click droit -> Open Module Settings
+        -> Libraries -> Selectionner toutes les jar du dossier " lib "
+
+- Lancer le programme AnalyseSI
+    - sur IntelliJ IDEA :
+        - Exécutez le fichier org.analyse.main.Main parmi les sources du projet
