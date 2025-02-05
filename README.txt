@@ -31,10 +31,10 @@ Prérequis recommandé
 
 - Lancez votre IDE
 - Importez le projet à partir du dossier source "AnalyseSI"
-    -- sur IntelliJ IDEA : File -> Open -> selectionner le dossier source
+    -- sur IntelliJ IDEA : File -> Open -> selectionnez le dossier source
 - Ajoutez toutes les librairies situées dans le dossier "lib"
     -- sur IntelliJ IDEA : click droit -> Open Module Settings
-        -> Libraries -> Selectionner toutes les jar du dossier " lib "
+        -> Libraries -> Selectionnez toutes les jar du dossier " lib "
 - Lancer le programme AnalyseSI
     -- sur IntelliJ IDEA : Exécutez le fichier org.analyse.main.Main
        parmi les sources du projet
