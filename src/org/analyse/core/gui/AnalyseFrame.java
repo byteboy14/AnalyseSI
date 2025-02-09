@@ -49,6 +49,7 @@ import org.analyse.core.gui.action.NavigationActionFactory;
 import org.analyse.core.gui.menu.AnalyseMenu;
 import org.analyse.core.gui.panel.HelpPanel;
 import org.analyse.core.gui.panel.Navigator;
+import org.analyse.core.gui.shortcuts.ASIKeyHandler;
 import org.analyse.core.gui.toolbar.AnalyseToolbar;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.util.Constantes;
@@ -111,7 +112,7 @@ public class AnalyseFrame extends JFrame {
                 
                 /* Permet à la Frame de recevoir les KeyEvent */
                 this.setFocusable(true);
-                this.addKeyListener(new KeyHandler());
+                this.addKeyListener(new ASIKeyHandler());
                 windowfocus wf = new windowfocus((this));
                 
 
@@ -382,26 +383,5 @@ public class AnalyseFrame extends JFrame {
 				System.exit(0);
 		}
 	}
-        
-        /** 
-         * Gère les évènements clavier
-         * ROUX Constant, MICHEL Arthur
-        */
-        
-        private class KeyHandler extends KeyAdapter
-        {
-            int lasttyped;
-            public void keyPressed(KeyEvent ke){
-                if((int)ke.getKeyCode() == 17){
-                    lasttyped = 17;
-                }
-                if((int)ke.getKeyCode() == 83 && lasttyped == 17){
-                    AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-                    s.save();
-                }
-                if((int)ke.getKeyCode() != 17){
-                    lasttyped = 0;
-                }
-            }
-        }
+
 }
