@@ -1,9 +1,6 @@
 package org.analyse.core.gui.shortcuts;
 
 
-import org.analyse.core.util.save.AnalyseSave;
-import org.analyse.main.Main;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -13,9 +10,22 @@ import java.awt.event.KeyEvent;
  */
 
 public class ASIKeyHandler extends KeyAdapter {
-    int lasttyped;
+
+    private int pressedKeyCode;
+
+    protected void setPressedKeyCode(int keyCode) {
+        this.pressedKeyCode = keyCode ;
+    }
+
+    private int lastPressedKeyCode ;
+    protected void setLastPressedKeyCode(int keyCode){
+        this.lastPressedKeyCode = keyCode ;
+    }
 
     public void keyPressed(KeyEvent ke) {
+
+        setPressedKeyCode(ke.getKeyCode());
+
 //        if((int)ke.getKeyCode() == 17){
 //            lasttyped = 17;
 //        }
@@ -32,7 +42,34 @@ public class ASIKeyHandler extends KeyAdapter {
 //            s.save();
 //        }
 
+        if(keyEventEqualControl(KeyEvent.VK_S)){
+
+        }
+
+
+        setLastPressedKeyCode(ke.getKeyCode());
         System.out.println(" event : " + KeyEvent.getKeyText(ke.getKeyCode())
-                .equals(KeyEvent.getKeyText(KeyEvent.VK_S)));
+                + " ctrl "+ keyEventEqual(KeyEvent.VK_CONTROL) );
     }
+
+    protected boolean keyEventEqualControl(int keyEventCode) {
+
+        return controlKeyIsPressed() && keyEventEqual(keyEventCode);
+    }
+
+    private boolean controlKeyIsPressed() {
+        return compareNewKeyCodeToKeyEventCode(lastPressedKeyCode, KeyEvent.VK_CONTROL) ;
+    }
+
+
+    protected boolean keyEventEqual(int keyEventCode ) {
+        return compareNewKeyCodeToKeyEventCode(pressedKeyCode, keyEventCode) ;
+    }
+
+    private boolean compareNewKeyCodeToKeyEventCode(int newKeyCode , int keyEventCode){
+        return KeyEvent.getKeyText(newKeyCode)
+                .equals(KeyEvent.getKeyText(keyEventCode)) ;
+    }
+
+
 }
