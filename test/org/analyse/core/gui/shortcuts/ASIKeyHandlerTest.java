@@ -85,6 +85,19 @@ public class ASIKeyHandlerTest {
     }
 
     @Test
+    public void keyPressed_redoFeatureCalled() {
+
+        assertFalse(keyHandler.isRedoCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isRedoCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_Y));
+
+        assertTrue(keyHandler.isRedoCalled);
+    }
+
+    @Test
     public void keyPressed_safeKeyPressedCombination() {
 
         assertFalse(keyHandler.isSaveCalled);
@@ -151,6 +164,7 @@ public class ASIKeyHandlerTest {
     private class TestableASIKeyHandler extends ASIKeyHandler {
 
 
+
         boolean isSaveCalled = false ;
 
         @Override
@@ -185,6 +199,11 @@ public class ASIKeyHandlerTest {
             isUndoCalled = true ;
         }
 
+        boolean isRedoCalled = false ;
+        @Override
+        protected  void redoOperation(){
+            isRedoCalled = true ;
+        }
     }
 
     private class EmptyKeyEvent extends KeyEvent {

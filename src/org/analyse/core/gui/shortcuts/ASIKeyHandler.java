@@ -58,6 +58,10 @@ public class ASIKeyHandler extends KeyAdapter {
         if (keyPressedEqualControl(KeyEvent.VK_Z)) {
             undoOperation();
         }
+
+        if (keyPressedEqualControl(KeyEvent.VK_Y)) {
+            redoOperation();
+        }
     }
 
     protected boolean keyPressedEqualControl(int keyEventCode) {
@@ -111,6 +115,17 @@ public class ASIKeyHandler extends KeyAdapter {
             System.err.println(exp);
         }
 
+    }
+
+    protected  void redoOperation(){
+        UndoInterface u;
+        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
+        try {
+            u = (UndoInterface) p;
+            u.redo();
+        } catch (ClassCastException exp) {
+            System.err.println(exp);
+        }
     }
 
     protected void setLastPressedKeyCode(int keyCode) {
