@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 
 /**
  * Gère les évènements clavier
- * ROUX Constant, MICHEL Arthur
  */
 
 public class ASIKeyHandler extends KeyAdapter {
