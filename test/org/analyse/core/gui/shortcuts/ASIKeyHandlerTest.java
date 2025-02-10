@@ -32,6 +32,19 @@ public class ASIKeyHandlerTest {
     }
 
     @Test
+    public void keyPressed_newProjectFeatureCalled() {
+
+        assertFalse(keyHandler.isNewCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isNewCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_N));
+
+        assertTrue(keyHandler.isNewCalled);
+    }
+
+    @Test
     public void keyPressed_safeKeyPressedCombination() {
 
         assertFalse(keyHandler.isSaveCalled);
@@ -55,30 +68,30 @@ public class ASIKeyHandlerTest {
 
 
     @Test
-    public void keyEventEqualControl_controlNotPressed() {
+    public void keyPressedEqualControl_controlNotPressed() {
 
-        assertFalse(keyHandler.keyEventEqualControl(KeyEvent.VK_O));
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
 
         keyHandler.setPressedKeyCode(KeyEvent.VK_O);
-        assertFalse(keyHandler.keyEventEqualControl(KeyEvent.VK_O));
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
 
         keyHandler.setPressedKeyCode(KeyEvent.VK_CONTROL);
-        assertFalse(keyHandler.keyEventEqualControl(KeyEvent.VK_CONTROL));
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_CONTROL));
     }
 
     @Test
-    public void keyEventEqualControl_controlIsPressed() {
+    public void keyPressedEqualControl_controlIsPressed() {
 
         keyHandler.setLastPressedKeyCode(KeyEvent.VK_CONTROL);
-        assertFalse(keyHandler.keyEventEqualControl(KeyEvent.VK_O));
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
 
         keyHandler.setPressedKeyCode(KeyEvent.VK_O);
-        assertTrue(keyHandler.keyEventEqualControl(KeyEvent.VK_O));
+        assertTrue(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
 
         keyHandler.setPressedKeyCode(KeyEvent.VK_S);
-        assertFalse(keyHandler.keyEventEqualControl(KeyEvent.VK_O));
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
 
-        assertTrue(keyHandler.keyEventEqualControl(KeyEvent.VK_S));
+        assertTrue(keyHandler.keyPressedEqualControl(KeyEvent.VK_S));
     }
 
     @Test
@@ -101,6 +114,13 @@ public class ASIKeyHandlerTest {
         @Override
         protected  void saveASI(){
             isSaveCalled = true ;
+        }
+
+        boolean isNewCalled = false ;
+
+        @Override
+        protected  void newASIProject(){
+            isNewCalled = true ;
         }
     }
 
