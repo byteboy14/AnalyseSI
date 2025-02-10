@@ -23,8 +23,13 @@ public class ASIKeyHandler extends KeyAdapter {
 
         setPressedKeyCode(ke.getKeyCode());
 
-        if (keyEventEqualControl(KeyEvent.VK_S)) {
+
+        if (keyPressedEqualControl(KeyEvent.VK_S)) {
             saveASI();
+        }
+
+        if(keyPressedEqualControl(KeyEvent.VK_N)){
+            newASIProject();
         }
 
         setLastPressedKeyCode(ke.getKeyCode());
@@ -36,7 +41,7 @@ public class ASIKeyHandler extends KeyAdapter {
         this.pressedKeyCode = keyCode;
     }
 
-    protected boolean keyEventEqualControl(int keyEventCode) {
+    protected boolean keyPressedEqualControl(int keyEventCode) {
 
         return controlKeyIsPressed() && keyEventEqual(keyEventCode);
     }
@@ -58,6 +63,13 @@ public class ASIKeyHandler extends KeyAdapter {
     protected void saveASI() {
         AnalyseSave s = Main.analyseFrame.getAnalyseSave();
         s.save();
+    }
+
+    protected void newASIProject(){
+        AnalyseSave s = Main.analyseFrame.getAnalyseSave();
+        s.setNewOption(true) ;
+        s.save();
+        s.clear();
     }
 
 
