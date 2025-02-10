@@ -3,18 +3,56 @@ package org.analyse.core.gui.shortcuts;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import static org.junit.Assert.*;
 
 public class ASIKeyHandlerTest {
 
-    private ASIKeyHandler keyHandler ;
+    private TestableASIKeyHandler keyHandler ;
 
     @Before
     public void setUp() {
-        keyHandler = new ASIKeyHandler();
+        keyHandler = new TestableASIKeyHandler();
     }
+
+
+    @Test
+    public void keyPressed_saveFeatureCalled() {
+
+        assertFalse(keyHandler.isSaveCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isSaveCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
+
+        assertTrue(keyHandler.isSaveCalled);
+    }
+
+    @Test
+    public void keyPressed_safeKeyPressedCombination() {
+
+        assertFalse(keyHandler.isSaveCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isSaveCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
+
+        assertTrue(keyHandler.isSaveCalled);
+        keyHandler.isSaveCalled = false ;
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
+        assertFalse(keyHandler.isSaveCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_C));
+
+        assertFalse(keyHandler.isSaveCalled);
+    }
+
 
     @Test
     public void keyEventEqualControl_controlNotPressed() {
@@ -55,4 +93,26 @@ public class ASIKeyHandlerTest {
 
         assertTrue(keyHandler.keyEventEqual(KeyEvent.VK_S));
     }
+
+
+    private class TestableASIKeyHandler extends ASIKeyHandler {
+        boolean isSaveCalled = false ;
+
+        @Override
+        protected  void saveASI(){
+            isSaveCalled = true ;
+        }
+    }
+
+    private class EmptyKeyEvent extends KeyEvent {
+
+        public EmptyKeyEvent(int keyCode){
+            super(new Component() {
+            }, 0, 0, 0, 0);
+
+            setKeyCode(keyCode);
+
+        }
+    }
+
 }

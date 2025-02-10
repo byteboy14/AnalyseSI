@@ -1,6 +1,9 @@
 package org.analyse.core.gui.shortcuts;
 
 
+import org.analyse.core.util.save.AnalyseSave;
+import org.analyse.main.Main;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -13,43 +16,24 @@ public class ASIKeyHandler extends KeyAdapter {
 
     private int pressedKeyCode;
 
-    protected void setPressedKeyCode(int keyCode) {
-        this.pressedKeyCode = keyCode ;
-    }
+    private int lastPressedKeyCode;
 
-    private int lastPressedKeyCode ;
-    protected void setLastPressedKeyCode(int keyCode){
-        this.lastPressedKeyCode = keyCode ;
-    }
 
     public void keyPressed(KeyEvent ke) {
 
         setPressedKeyCode(ke.getKeyCode());
 
-//        if((int)ke.getKeyCode() == 17){
-//            lasttyped = 17;
-//        }
-//        if((int)ke.getKeyCode() == 83 && lasttyped == 17){
-//            AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-//            s.save();
-//        }
-//        if((int)ke.getKeyCode() != 17){
-//            lasttyped = 0;
-//        }
-
-//        if (ke.getKeyCode() == 83 && lasttyped == 17) {
-//            AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-//            s.save();
-//        }
-
-        if(keyEventEqualControl(KeyEvent.VK_S)){
-
+        if (keyEventEqualControl(KeyEvent.VK_S)) {
+            saveASI();
         }
 
-
         setLastPressedKeyCode(ke.getKeyCode());
-        System.out.println(" event : " + KeyEvent.getKeyText(ke.getKeyCode())
-                + " ctrl "+ keyEventEqual(KeyEvent.VK_CONTROL) );
+
+    }
+
+
+    protected void setPressedKeyCode(int keyCode) {
+        this.pressedKeyCode = keyCode;
     }
 
     protected boolean keyEventEqualControl(int keyEventCode) {
@@ -58,17 +42,28 @@ public class ASIKeyHandler extends KeyAdapter {
     }
 
     private boolean controlKeyIsPressed() {
-        return compareNewKeyCodeToKeyEventCode(lastPressedKeyCode, KeyEvent.VK_CONTROL) ;
+        return compareNewKeyCodeToKeyEventCode(lastPressedKeyCode, KeyEvent.VK_CONTROL);
     }
 
 
-    protected boolean keyEventEqual(int keyEventCode ) {
-        return compareNewKeyCodeToKeyEventCode(pressedKeyCode, keyEventCode) ;
+    protected boolean keyEventEqual(int keyEventCode) {
+        return compareNewKeyCodeToKeyEventCode(pressedKeyCode, keyEventCode);
     }
 
-    private boolean compareNewKeyCodeToKeyEventCode(int newKeyCode , int keyEventCode){
+    private boolean compareNewKeyCodeToKeyEventCode(int newKeyCode, int keyEventCode) {
         return KeyEvent.getKeyText(newKeyCode)
-                .equals(KeyEvent.getKeyText(keyEventCode)) ;
+                .equals(KeyEvent.getKeyText(keyEventCode));
+    }
+
+    protected void saveASI() {
+        AnalyseSave s = Main.analyseFrame.getAnalyseSave();
+        s.save();
+    }
+
+
+
+    protected void setLastPressedKeyCode(int keyCode) {
+        this.lastPressedKeyCode = keyCode;
     }
 
 
