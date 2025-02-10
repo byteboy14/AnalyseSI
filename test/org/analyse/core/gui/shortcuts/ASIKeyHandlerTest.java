@@ -57,6 +57,20 @@ public class ASIKeyHandlerTest {
         assertTrue(keyHandler.isOpenCalled);
     }
 
+
+    @Test
+    public void keyPressed_saveAsFeatureCalled() {
+
+        assertFalse(keyHandler.isSaveAsCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isSaveAsCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_A));
+
+        assertTrue(keyHandler.isSaveAsCalled);
+    }
+
     @Test
     public void keyPressed_safeKeyPressedCombination() {
 
@@ -122,6 +136,7 @@ public class ASIKeyHandlerTest {
 
 
     private class TestableASIKeyHandler extends ASIKeyHandler {
+
         boolean isSaveCalled = false ;
 
         @Override
@@ -142,6 +157,14 @@ public class ASIKeyHandlerTest {
         protected  void openASIProject(){
             isOpenCalled = true ;
         }
+
+        boolean isSaveAsCalled = false ;
+
+        @Override
+        protected  void saveAsASI(){
+            isSaveAsCalled = true ;
+        }
+
     }
 
     private class EmptyKeyEvent extends KeyEvent {

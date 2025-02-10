@@ -37,16 +37,20 @@ public class ASIKeyHandler extends KeyAdapter {
 
     private void findShortCutAndExecuteCommand(){
 
-        if (keyPressedEqualControl(KeyEvent.VK_S)) {
-            saveASI();
-        }
-
         if(keyPressedEqualControl(KeyEvent.VK_N)){
             newASIProject();
         }
 
         if(keyPressedEqualControl(KeyEvent.VK_O)){
             openASIProject();
+        }
+
+        if (keyPressedEqualControl(KeyEvent.VK_S)) {
+            saveASI();
+        }
+
+        if (keyPressedEqualControl(KeyEvent.VK_A)) {
+            saveAsASI();
         }
     }
 
@@ -86,6 +90,10 @@ public class ASIKeyHandler extends KeyAdapter {
         s.open();
     }
 
+    protected  void saveAsASI(){
+        AnalyseSave s = Main.analyseFrame.getAnalyseSave();
+        s.saveAs();
+    }
 
     protected void setLastPressedKeyCode(int keyCode) {
         this.lastPressedKeyCode = keyCode;
