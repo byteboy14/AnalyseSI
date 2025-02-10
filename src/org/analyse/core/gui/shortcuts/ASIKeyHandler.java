@@ -1,6 +1,8 @@
 package org.analyse.core.gui.shortcuts;
 
 
+import org.analyse.core.modules.AnalysePanel;
+import org.analyse.core.modules.UndoInterface;
 import org.analyse.core.util.save.AnalyseSave;
 import org.analyse.main.Main;
 
@@ -52,6 +54,10 @@ public class ASIKeyHandler extends KeyAdapter {
         if (keyPressedEqualControl(KeyEvent.VK_A)) {
             saveAsASI();
         }
+
+        if (keyPressedEqualControl(KeyEvent.VK_Z)) {
+            undoOperation();
+        }
     }
 
     protected boolean keyPressedEqualControl(int keyEventCode) {
@@ -93,6 +99,18 @@ public class ASIKeyHandler extends KeyAdapter {
     protected  void saveAsASI(){
         AnalyseSave s = Main.analyseFrame.getAnalyseSave();
         s.saveAs();
+    }
+
+    protected  void undoOperation(){
+        UndoInterface u;
+        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
+        try {
+            u = (UndoInterface) p;
+            u.undo();
+        } catch (ClassCastException exp) {
+            System.err.println(exp);
+        }
+
     }
 
     protected void setLastPressedKeyCode(int keyCode) {

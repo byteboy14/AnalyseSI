@@ -72,6 +72,19 @@ public class ASIKeyHandlerTest {
     }
 
     @Test
+    public void keyPressed_undoFeatureCalled() {
+
+        assertFalse(keyHandler.isUndoCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isUndoCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_Z));
+
+        assertTrue(keyHandler.isUndoCalled);
+    }
+
+    @Test
     public void keyPressed_safeKeyPressedCombination() {
 
         assertFalse(keyHandler.isSaveCalled);
@@ -137,6 +150,7 @@ public class ASIKeyHandlerTest {
 
     private class TestableASIKeyHandler extends ASIKeyHandler {
 
+
         boolean isSaveCalled = false ;
 
         @Override
@@ -163,6 +177,12 @@ public class ASIKeyHandlerTest {
         @Override
         protected  void saveAsASI(){
             isSaveAsCalled = true ;
+        }
+
+        boolean isUndoCalled = false ;
+        @Override
+        protected  void undoOperation(){
+            isUndoCalled = true ;
         }
 
     }
