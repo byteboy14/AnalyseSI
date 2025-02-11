@@ -2,6 +2,7 @@ package org.analyse.core.gui.shortcuts;
 
 
 import org.analyse.core.modules.AnalysePanel;
+import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.modules.UndoInterface;
 import org.analyse.core.util.save.AnalyseSave;
 import org.analyse.main.Main;
@@ -60,6 +61,10 @@ public class ASIKeyHandler extends KeyAdapter {
 
         if (keyPressedEqualControl(KeyEvent.VK_Y)) {
             redoOperation();
+        }
+
+        if (keyPressedEqualControl(KeyEvent.VK_X)) {
+            cutOperation();
         }
     }
 
@@ -122,6 +127,17 @@ public class ASIKeyHandler extends KeyAdapter {
         try {
             u = (UndoInterface) p;
             u.redo();
+        } catch (ClassCastException exp) {
+            System.err.println(exp);
+        }
+    }
+
+    protected  void cutOperation(){
+        ClipboardInterface c;
+        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
+        try {
+            c = (ClipboardInterface) p;
+            c.cut();
         } catch (ClassCastException exp) {
             System.err.println(exp);
         }

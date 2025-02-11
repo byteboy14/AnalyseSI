@@ -98,6 +98,19 @@ public class ASIKeyHandlerTest {
     }
 
     @Test
+    public void keyPressed_cutFeatureCalled() {
+
+        assertFalse(keyHandler.isCutCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isCutCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_X));
+
+        assertTrue(keyHandler.isCutCalled);
+    }
+
+    @Test
     public void keyPressed_safeKeyPressedCombination() {
 
         assertFalse(keyHandler.isSaveCalled);
@@ -203,6 +216,12 @@ public class ASIKeyHandlerTest {
         @Override
         protected  void redoOperation(){
             isRedoCalled = true ;
+        }
+
+        boolean isCutCalled = false ;
+        @Override
+        protected  void cutOperation(){
+            isCutCalled = true ;
         }
     }
 
