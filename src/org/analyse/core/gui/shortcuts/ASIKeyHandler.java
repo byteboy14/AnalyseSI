@@ -66,6 +66,10 @@ public class ASIKeyHandler extends KeyAdapter {
         if (keyPressedEqualControl(KeyEvent.VK_X)) {
             cutOperation();
         }
+
+        if (keyPressedEqualControl(KeyEvent.VK_V)) {
+            pasteOperation();
+        }
     }
 
     protected boolean keyPressedEqualControl(int keyEventCode) {
@@ -142,6 +146,20 @@ public class ASIKeyHandler extends KeyAdapter {
             System.err.println(exp);
         }
     }
+
+    protected  void pasteOperation(){
+        ClipboardInterface c;
+        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
+
+        try {
+            c = (ClipboardInterface) p;
+            c.paste();
+        } catch (ClassCastException exp) {
+            System.err.println(exp);
+        }
+    }
+
+
 
     protected void setLastPressedKeyCode(int keyCode) {
         this.lastPressedKeyCode = keyCode;
