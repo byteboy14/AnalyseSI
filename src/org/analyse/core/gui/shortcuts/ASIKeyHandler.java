@@ -70,6 +70,10 @@ public class ASIKeyHandler extends KeyAdapter {
         if (keyPressedEqualControl(KeyEvent.VK_V)) {
             pasteOperation();
         }
+
+        if (keyPressedEqualControl(KeyEvent.VK_C)) {
+            copyOperation();
+        }
     }
 
     protected boolean keyPressedEqualControl(int keyEventCode) {
@@ -154,6 +158,17 @@ public class ASIKeyHandler extends KeyAdapter {
         try {
             c = (ClipboardInterface) p;
             c.paste();
+        } catch (ClassCastException exp) {
+            System.err.println(exp);
+        }
+    }
+
+    protected  void copyOperation(){
+        ClipboardInterface c;
+        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
+        try {
+            c = (ClipboardInterface) p;
+            c.copy();
         } catch (ClassCastException exp) {
             System.err.println(exp);
         }

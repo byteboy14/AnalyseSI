@@ -124,6 +124,19 @@ public class ASIKeyHandlerTest {
     }
 
     @Test
+    public void keyPressed_copyFeatureCalled() {
+
+        assertFalse(keyHandler.isCopiedCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isCopiedCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_C));
+
+        assertTrue(keyHandler.isCopiedCalled);
+    }
+
+    @Test
     public void keyPressed_safeKeyPressedCombination() {
 
         assertFalse(keyHandler.isSaveCalled);
@@ -241,6 +254,12 @@ public class ASIKeyHandlerTest {
         @Override
         protected  void pasteOperation(){
             isPasteCalled = true ;
+        }
+
+        boolean isCopiedCalled = false ;
+        @Override
+        protected  void copyOperation(){
+            isCopiedCalled = true ;
         }
     }
 
