@@ -24,14 +24,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
-import org.analyse.core.gui.command.asi.impl.OpenASIProjectCommand;
+import org.analyse.core.gui.command.asi.impl.OpenProjectASICommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
 import org.analyse.core.gui.command.asi.impl.SaveAsASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.modules.UndoInterface;
 import org.analyse.core.util.Constantes;
-import org.analyse.core.util.save.AnalyseSave;
 import org.analyse.main.Main;
 
 public class MainActionListener implements ActionListener
@@ -93,7 +92,7 @@ public class MainActionListener implements ActionListener
             new CreateASIProjectCommand().execute();
             
         } else if (action.equals(Constantes.OPEN)) {
-            new OpenASIProjectCommand().execute();
+            new OpenProjectASICommand().execute();
         } else if (action.equals(Constantes.SAVE)) {
             new SaveASICommand().execute();
         } else if (action.equals(Constantes.SAVEAS)) {

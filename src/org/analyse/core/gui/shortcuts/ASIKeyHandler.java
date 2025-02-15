@@ -1,15 +1,13 @@
 package org.analyse.core.gui.shortcuts;
 
 
-import org.analyse.core.gui.command.Command;
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
-import org.analyse.core.gui.command.asi.impl.OpenASIProjectCommand;
+import org.analyse.core.gui.command.asi.impl.OpenProjectASICommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
 import org.analyse.core.gui.command.asi.impl.SaveAsASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.modules.UndoInterface;
-import org.analyse.core.util.save.AnalyseSave;
 import org.analyse.main.Main;
 
 import java.awt.event.KeyAdapter;
@@ -105,7 +103,7 @@ public class ASIKeyHandler extends KeyAdapter {
     }
 
     protected  void openASIProject(){
-        new OpenASIProjectCommand().execute();
+        new OpenProjectASICommand().execute();
     }
 
 
