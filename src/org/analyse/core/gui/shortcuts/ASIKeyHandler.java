@@ -1,6 +1,8 @@
 package org.analyse.core.gui.shortcuts;
 
 
+import org.analyse.core.gui.command.Command;
+import org.analyse.core.gui.command.asi.impl.SaveASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.modules.UndoInterface;
@@ -95,11 +97,6 @@ public class ASIKeyHandler extends KeyAdapter {
                 .equals(KeyEvent.getKeyText(keyEventCode));
     }
 
-    protected void saveASI() {
-        AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-        s.save();
-    }
-
     protected void newASIProject(){
         AnalyseSave s = Main.analyseFrame.getAnalyseSave();
         s.setNewOption(true) ;
@@ -111,6 +108,12 @@ public class ASIKeyHandler extends KeyAdapter {
         AnalyseSave s = Main.analyseFrame.getAnalyseSave();
         s.open();
     }
+
+
+    protected void saveASI() {
+        new SaveASICommand().execute();
+    }
+
 
     protected  void saveAsASI(){
         AnalyseSave s = Main.analyseFrame.getAnalyseSave();
