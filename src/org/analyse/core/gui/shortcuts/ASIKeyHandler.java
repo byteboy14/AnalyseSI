@@ -5,6 +5,7 @@ import org.analyse.core.gui.command.Command;
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.OpenASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
+import org.analyse.core.gui.command.asi.impl.SaveAsASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.modules.UndoInterface;
@@ -114,8 +115,7 @@ public class ASIKeyHandler extends KeyAdapter {
 
 
     protected  void saveAsASI(){
-        AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-        s.saveAs();
+        new SaveAsASICommand().execute();
     }
 
     protected  void undoOperation(){

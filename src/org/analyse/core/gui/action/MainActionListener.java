@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.OpenASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
+import org.analyse.core.gui.command.asi.impl.SaveAsASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.modules.UndoInterface;
@@ -96,9 +97,7 @@ public class MainActionListener implements ActionListener
         } else if (action.equals(Constantes.SAVE)) {
             new SaveASICommand().execute();
         } else if (action.equals(Constantes.SAVEAS)) {
-            AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-
-            s.saveAs();
+            new SaveAsASICommand().execute();
         } else if (action.equals(Constantes.SHOWHIDE_NAVIGATOR)) {
             Main.analyseFrame.showHideNavigator();          
         } else if (action.equals(Constantes.PARAMETRAGE)) {
