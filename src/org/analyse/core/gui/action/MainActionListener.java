@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
+import org.analyse.core.gui.command.asi.impl.OpenASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
@@ -91,9 +92,7 @@ public class MainActionListener implements ActionListener
             new CreateASIProjectCommand().execute();
             
         } else if (action.equals(Constantes.OPEN)) {
-            AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-
-            s.open();
+            new OpenASIProjectCommand().execute();
         } else if (action.equals(Constantes.SAVE)) {
             new SaveASICommand().execute();
         } else if (action.equals(Constantes.SAVEAS)) {

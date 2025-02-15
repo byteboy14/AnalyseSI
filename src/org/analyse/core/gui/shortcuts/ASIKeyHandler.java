@@ -3,6 +3,7 @@ package org.analyse.core.gui.shortcuts;
 
 import org.analyse.core.gui.command.Command;
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
+import org.analyse.core.gui.command.asi.impl.OpenASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.modules.ClipboardInterface;
@@ -103,8 +104,7 @@ public class ASIKeyHandler extends KeyAdapter {
     }
 
     protected  void openASIProject(){
-        AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-        s.open();
+        new OpenASIProjectCommand().execute();
     }
 
 
