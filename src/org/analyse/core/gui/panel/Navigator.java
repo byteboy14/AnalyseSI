@@ -31,7 +31,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.gui.action.BasicAction;
 import org.analyse.core.util.Constantes;
 import org.analyse.core.util.Utilities;
