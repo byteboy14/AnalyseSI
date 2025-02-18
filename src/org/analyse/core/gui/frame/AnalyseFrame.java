@@ -61,7 +61,7 @@ import org.analyse.main.Main;
 /**
  * Fenetre principale d'AnalyseSI
  */
-public class AnalyseFrame extends JFrame {
+public class AnalyseFrame extends JFrame implements FrameListener{
 	
 	public static final String DEFAULT = Constantes.DEFAULT ; 
 	public static final String HELP = Constantes.HELP;
@@ -78,8 +78,6 @@ public class AnalyseFrame extends JFrame {
 
 	/* Sauvegarde */
 	private Properties props;
-
-	private AnalyseSave analyseSave;
 
 	/* Panel */
 	private Navigator navigator;
@@ -101,6 +99,9 @@ public class AnalyseFrame extends JFrame {
 	public AnalyseFrame() {
 		/* Construction d'AnalyseFrame */
 		super(Utilities.getRelease() + " - sans nom");
+
+		FrameObserver.Instance().subscribeListener(this);
+
 		this
 				.setIconImage(GUIUtilities.getImageIcon(Constantes.FILE_PNG_ANALYSESI)
 						.getImage());
@@ -168,8 +169,6 @@ public class AnalyseFrame extends JFrame {
 		GUIUtilities.centerComponent(this);
 		Main.splash.setProgress(70);
 
-		/* Gestion des sauvegardes */
-		analyseSave = new AnalyseSave(this);
 		Main.splash.setProgress(80);
 
 		/* Chargement des propriétés */
@@ -283,7 +282,7 @@ public class AnalyseFrame extends JFrame {
 	/**
 	 * Modifie le panel courant.
 	 * 
-	 * @param c
+	 * @param panelCurrent
 	 *            nouveau panel
 	 */
 	public void setPanel(AnalysePanel panelCurrent) {
@@ -310,13 +309,6 @@ public class AnalyseFrame extends JFrame {
 	 */
 	public AnalyseBar getAnalyseBar() {
 		return analyseBar;
-	}
-
-	/**
-	 * Retourne la classe qui gère les sauvegardes.
-	 */
-	public AnalyseSave getAnalyseSave() {
-		return analyseSave;
 	}
 
 	/**
@@ -355,7 +347,7 @@ public class AnalyseFrame extends JFrame {
 	 * Ferme proprement en sauvegardant les paramètres.
 	 */
 	public boolean exit() {
-		
+		AnalyseSave analyseSave = new AnalyseSave();
 		int  reponse  = analyseSave.closeProgram();
 
 		if ( reponse == JOptionPane.YES_OPTION || reponse == JOptionPane.NO_OPTION  ) {		// Bug #348263	
@@ -365,6 +357,11 @@ public class AnalyseFrame extends JFrame {
 
         return reponse != JOptionPane.CANCEL_OPTION;
 
+	}
+
+	@Override
+	public void updateTitle(String title) {
+		setTitle(title);
 	}
 
 	private class WindowHandler extends WindowAdapter {

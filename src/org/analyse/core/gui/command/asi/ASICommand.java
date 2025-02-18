@@ -9,6 +9,6 @@ public abstract class ASICommand implements Command {
     protected AnalyseSave analyseSave ;
 
     public ASICommand(){
-        analyseSave = Main.analyseFrame.getAnalyseSave() ;
+        analyseSave = new AnalyseSave() ;
     }
 }
