@@ -29,9 +29,10 @@ import java.util.Map.Entry;
 import javax.swing.UIManager;
 import org.analyse.core.gui.ParametrageWindow;
 import org.analyse.core.gui.AboutWindow;
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.gui.SplashScreen;
 import org.analyse.core.gui.action.GlobalActionCollection;
+import org.analyse.core.gui.command.asi.impl.OpenProjectASICommand;
 import org.analyse.core.gui.statusbar.AnalyseStatusbar;
 import org.analyse.core.modules.AnalyseModule;
 import org.analyse.merise.main.MeriseModule;
@@ -135,7 +136,7 @@ public final class Main
         splash.setVisible(false);
 
         if (args.length > 0)
-            analyseFrame.getAnalyseSave().open(args[0]);
+            new OpenProjectASICommand(args[0]).execute();
     }
 
     public static AnalyseModule getModule(String id)

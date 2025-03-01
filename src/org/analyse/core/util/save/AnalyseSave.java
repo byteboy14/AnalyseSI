@@ -43,7 +43,8 @@ import java.util.Map.Entry;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
+import org.analyse.core.gui.frame.FrameObserver;
 import org.analyse.core.modules.AnalyseModule;
 import org.analyse.core.save.FiltreASI;
 import org.analyse.core.util.Constantes;
@@ -78,13 +79,11 @@ public class AnalyseSave {
 
     private JFileChooser chooser;
 
-    private AnalyseFrame frame;
 
     private List<FiltreASI> filtres;
 
-    public AnalyseSave(AnalyseFrame frame)
+    public AnalyseSave()
     {
-        this.frame = frame;
         this.setSave ( true ) ; 
 
         initFilter();
@@ -132,7 +131,9 @@ public class AnalyseSave {
         	if ( sauvegarder == JOptionPane.YES_OPTION ) {
         		((Save) af).save( file );
         		msgSave ( Utilities.getLangueMessage( Constantes.MESSAGE_SAUVEGARDE_EFFECTUEE )) ;
-        		frame.setTitle(Utilities.getRelease() + " - " + this.fileName);
+
+                FrameObserver.Instance()
+                        .updateFrameTitle(Utilities.getRelease() + " - " + this.fileName);
         		
         	}
         
@@ -174,8 +175,9 @@ public class AnalyseSave {
     		((Save) af).save( file );    		
     		msgSave ( Utilities.getLangueMessage( Constantes.MESSAGE_SAUVEGARDE_EFFECTUEE ) ) ;     		
     	}
-    	
-        frame.setTitle(Utilities.getRelease() + " - " + this.fileName);
+
+        FrameObserver.Instance()
+                .updateFrameTitle(Utilities.getRelease() + " - " + this.fileName);
         
     }
 
@@ -216,7 +218,8 @@ public class AnalyseSave {
         AnalyseFilter af = getAnalyseFilter();
         if (af != null && af.canOpen())
             ((Open) af).open(new File(this.fileName));
-        frame.setTitle(Utilities.getRelease() + " - " + this.fileName);
+        FrameObserver.Instance()
+                .updateFrameTitle(Utilities.getRelease() + " - " + this.fileName);
     }
 
     private  int  popupExit () {
@@ -277,7 +280,8 @@ public class AnalyseSave {
         }
 
         this.setSave ( false ) ;
-        frame.setTitle( Utilities.getRelease() + " - sans nom");
+        FrameObserver.Instance()
+                .updateFrameTitle( Utilities.getRelease() + " - sans nom");
     }
 
     /**

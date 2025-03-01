@@ -26,7 +26,7 @@ import java.util.List;
 
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 
 public abstract class AnalyseModule
 {

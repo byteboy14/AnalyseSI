@@ -136,7 +136,7 @@ public class GlobalActionCollection implements Observer {
 				Utilities.getLangueMessage(Constantes.MESSAGE_COLLER), 
 				Utilities.getLangueMessage(Constantes.MESSAGE_COLLER_ELEMENT),
 				Constantes.PASTE, GUIUtilities.getImageIcon(Constantes.FILE_PNG_PASTE ), 'l', KeyStroke
-						.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+						.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
 		action.addActionListener(mainActionListener);
 		actionCollection
 				.put(action.getValue(Action.ACTION_COMMAND_KEY), action);

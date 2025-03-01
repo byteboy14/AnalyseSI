@@ -1,0 +1,277 @@
+package org.analyse.core.gui.shortcuts;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import static org.junit.Assert.*;
+
+public class ASIKeyHandlerTest {
+
+    private TestableASIKeyHandler keyHandler ;
+
+    @Before
+    public void setUp() {
+        keyHandler = new TestableASIKeyHandler();
+    }
+
+
+    @Test
+    public void keyPressed_saveFeatureCalled() {
+
+        assertFalse(keyHandler.isSaveCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isSaveCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
+
+        assertTrue(keyHandler.isSaveCalled);
+    }
+
+    @Test
+    public void keyPressed_newProjectFeatureCalled() {
+
+        assertFalse(keyHandler.isNewCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isNewCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_N));
+
+        assertTrue(keyHandler.isNewCalled);
+    }
+
+    @Test
+    public void keyPressed_openFeatureCalled() {
+
+        assertFalse(keyHandler.isOpenCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isOpenCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_O));
+
+        assertTrue(keyHandler.isOpenCalled);
+    }
+
+
+    @Test
+    public void keyPressed_saveAsFeatureCalled() {
+
+        assertFalse(keyHandler.isSaveAsCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isSaveAsCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_A));
+
+        assertTrue(keyHandler.isSaveAsCalled);
+    }
+
+    @Test
+    public void keyPressed_undoFeatureCalled() {
+
+        assertFalse(keyHandler.isUndoCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isUndoCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_Z));
+
+        assertTrue(keyHandler.isUndoCalled);
+    }
+
+    @Test
+    public void keyPressed_redoFeatureCalled() {
+
+        assertFalse(keyHandler.isRedoCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isRedoCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_Y));
+
+        assertTrue(keyHandler.isRedoCalled);
+    }
+
+    @Test
+    public void keyPressed_cutFeatureCalled() {
+
+        assertFalse(keyHandler.isCutCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isCutCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_X));
+
+        assertTrue(keyHandler.isCutCalled);
+    }
+
+    @Test
+    public void keyPressed_pasteFeatureCalled() {
+
+        assertFalse(keyHandler.isPasteCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isPasteCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_V));
+
+        assertTrue(keyHandler.isPasteCalled);
+    }
+
+    @Test
+    public void keyPressed_copyFeatureCalled() {
+
+        assertFalse(keyHandler.isCopiedCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isCopiedCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_C));
+
+        assertTrue(keyHandler.isCopiedCalled);
+    }
+
+    @Test
+    public void keyPressed_safeKeyPressedCombination() {
+
+        assertFalse(keyHandler.isSaveCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+
+        assertFalse(keyHandler.isSaveCalled);
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
+
+        assertTrue(keyHandler.isSaveCalled);
+        keyHandler.isSaveCalled = false ;
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
+        assertFalse(keyHandler.isSaveCalled);
+
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
+        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_C));
+
+        assertFalse(keyHandler.isSaveCalled);
+    }
+
+
+    @Test
+    public void keyPressedEqualControl_controlNotPressed() {
+
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
+
+        keyHandler.setPressedKeyCode(KeyEvent.VK_O);
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
+
+        keyHandler.setPressedKeyCode(KeyEvent.VK_CONTROL);
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_CONTROL));
+    }
+
+    @Test
+    public void keyPressedEqualControl_controlIsPressed() {
+
+        keyHandler.setLastPressedKeyCode(KeyEvent.VK_CONTROL);
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
+
+        keyHandler.setPressedKeyCode(KeyEvent.VK_O);
+        assertTrue(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
+
+        keyHandler.setPressedKeyCode(KeyEvent.VK_S);
+        assertFalse(keyHandler.keyPressedEqualControl(KeyEvent.VK_O));
+
+        assertTrue(keyHandler.keyPressedEqualControl(KeyEvent.VK_S));
+    }
+
+    @Test
+    public void keyEventEqual_sameWithLastPressedKey() {
+        assertFalse(keyHandler.keyEventEqual(KeyEvent.VK_O));
+
+        keyHandler.setPressedKeyCode(KeyEvent.VK_O);
+        assertTrue(keyHandler.keyEventEqual(KeyEvent.VK_O));
+
+        keyHandler.setPressedKeyCode(KeyEvent.VK_S);
+        assertFalse(keyHandler.keyEventEqual(KeyEvent.VK_O));
+
+        assertTrue(keyHandler.keyEventEqual(KeyEvent.VK_S));
+    }
+
+
+    private class TestableASIKeyHandler extends ASIKeyHandler {
+
+
+
+        boolean isSaveCalled = false ;
+
+        @Override
+        protected  void saveASI(){
+            isSaveCalled = true ;
+        }
+
+        boolean isNewCalled = false ;
+
+        @Override
+        protected  void newASIProject(){
+            isNewCalled = true ;
+        }
+
+        boolean isOpenCalled = false ;
+
+        @Override
+        protected  void openASIProject(){
+            isOpenCalled = true ;
+        }
+
+        boolean isSaveAsCalled = false ;
+
+        @Override
+        protected  void saveAsASI(){
+            isSaveAsCalled = true ;
+        }
+
+        boolean isUndoCalled = false ;
+        @Override
+        protected  void undoOperation(){
+            isUndoCalled = true ;
+        }
+
+        boolean isRedoCalled = false ;
+        @Override
+        protected  void redoOperation(){
+            isRedoCalled = true ;
+        }
+
+        boolean isCutCalled = false ;
+        @Override
+        protected  void cutOperation(){
+            isCutCalled = true ;
+        }
+
+        boolean isPasteCalled = false ;
+        @Override
+        protected  void pasteOperation(){
+            isPasteCalled = true ;
+        }
+
+        boolean isCopiedCalled = false ;
+        @Override
+        protected  void copyOperation(){
+            isCopiedCalled = true ;
+        }
+    }
+
+    private class EmptyKeyEvent extends KeyEvent {
+
+        public EmptyKeyEvent(int keyCode){
+            super(new Component() {
+            }, 0, 0, 0, 0);
+
+            setKeyCode(keyCode);
+
+        }
+    }
+
+}

@@ -22,7 +22,7 @@ package org.analyse.merise.main;
 
 import javax.swing.JButton;
 
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.gui.action.BasicAction;
 import org.analyse.core.gui.action.NavigationActionFactory;
 import org.analyse.core.modules.AnalyseModule;

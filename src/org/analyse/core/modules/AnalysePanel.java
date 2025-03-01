@@ -26,6 +26,8 @@ package org.analyse.core.modules;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
+
+import org.analyse.core.gui.shortcuts.ASIKeyHandler;
 import org.analyse.core.util.save.AnalyseSave;
 import org.analyse.main.Main;
 
@@ -54,7 +56,7 @@ public abstract class AnalysePanel extends JPanel
         pasteEnabled = this instanceof ClipboardInterface;
         
         this.setFocusable(true);
-        this.addKeyListener(new KeyHandler());
+        this.addKeyListener(new ASIKeyHandler());
     }
 
     /**
@@ -119,21 +121,5 @@ public abstract class AnalysePanel extends JPanel
     public void setPasteEnabled(boolean pasteEnabled) {
         this.pasteEnabled = pasteEnabled;
     }
-    
-    private class KeyHandler extends KeyAdapter
-        {
-            int lasttyped;
-            public void keyPressed(KeyEvent ke){
-                if((int)ke.getKeyCode() == 17){
-                    lasttyped = 17;
-                }
-                if((int)ke.getKeyCode() == 83 && lasttyped == 17){
-                    AnalyseSave s = Main.analyseFrame.getAnalyseSave();
-                    s.save();
-                }
-                if((int)ke.getKeyCode() != 17){
-                    lasttyped = 0;
-                }
-            }
-        }
+
 }
