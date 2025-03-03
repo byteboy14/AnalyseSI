@@ -58,25 +58,6 @@ public class ASIKeyHandler extends KeyAdapter {
             saveAsASI();
         }
 
-        if (keyPressedEqualControl(KeyEvent.VK_Z)) {
-            undoOperation();
-        }
-
-        if (keyPressedEqualControl(KeyEvent.VK_Y)) {
-            redoOperation();
-        }
-
-        if (keyPressedEqualControl(KeyEvent.VK_X)) {
-            cutOperation();
-        }
-
-        if (keyPressedEqualControl(KeyEvent.VK_V)) {
-            pasteOperation();
-        }
-
-        if (keyPressedEqualControl(KeyEvent.VK_C)) {
-            copyOperation();
-        }
     }
 
     protected boolean keyPressedEqualControl(int keyEventCode) {
@@ -115,65 +96,6 @@ public class ASIKeyHandler extends KeyAdapter {
     protected  void saveAsASI(){
         new SaveAsASICommand().execute();
     }
-
-    protected  void undoOperation(){
-        UndoInterface u;
-        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
-        try {
-            u = (UndoInterface) p;
-            u.undo();
-        } catch (ClassCastException exp) {
-            System.err.println(exp);
-        }
-
-    }
-
-    protected  void redoOperation(){
-        UndoInterface u;
-        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
-        try {
-            u = (UndoInterface) p;
-            u.redo();
-        } catch (ClassCastException exp) {
-            System.err.println(exp);
-        }
-    }
-
-    protected  void cutOperation(){
-        ClipboardInterface c;
-        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
-        try {
-            c = (ClipboardInterface) p;
-            c.cut();
-        } catch (ClassCastException exp) {
-            System.err.println(exp);
-        }
-    }
-
-    protected  void pasteOperation(){
-        ClipboardInterface c;
-        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
-
-        try {
-            c = (ClipboardInterface) p;
-            c.paste();
-        } catch (ClassCastException exp) {
-            System.err.println(exp);
-        }
-    }
-
-    protected  void copyOperation(){
-        ClipboardInterface c;
-        AnalysePanel p = Main.analyseFrame.getCurrentPanel();
-        try {
-            c = (ClipboardInterface) p;
-            c.copy();
-        } catch (ClassCastException exp) {
-            System.err.println(exp);
-        }
-    }
-
-
 
     protected void setLastPressedKeyCode(int keyCode) {
         this.lastPressedKeyCode = keyCode;

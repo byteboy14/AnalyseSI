@@ -71,70 +71,7 @@ public class ASIKeyHandlerTest {
         assertTrue(keyHandler.isSaveAsCalled);
     }
 
-    @Test
-    public void keyPressed_undoFeatureCalled() {
 
-        assertFalse(keyHandler.isUndoCalled);
-
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
-
-        assertFalse(keyHandler.isUndoCalled);
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_Z));
-
-        assertTrue(keyHandler.isUndoCalled);
-    }
-
-    @Test
-    public void keyPressed_redoFeatureCalled() {
-
-        assertFalse(keyHandler.isRedoCalled);
-
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
-
-        assertFalse(keyHandler.isRedoCalled);
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_Y));
-
-        assertTrue(keyHandler.isRedoCalled);
-    }
-
-    @Test
-    public void keyPressed_cutFeatureCalled() {
-
-        assertFalse(keyHandler.isCutCalled);
-
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
-
-        assertFalse(keyHandler.isCutCalled);
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_X));
-
-        assertTrue(keyHandler.isCutCalled);
-    }
-
-    @Test
-    public void keyPressed_pasteFeatureCalled() {
-
-        assertFalse(keyHandler.isPasteCalled);
-
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
-
-        assertFalse(keyHandler.isPasteCalled);
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_V));
-
-        assertTrue(keyHandler.isPasteCalled);
-    }
-
-    @Test
-    public void keyPressed_copyFeatureCalled() {
-
-        assertFalse(keyHandler.isCopiedCalled);
-
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_CONTROL));
-
-        assertFalse(keyHandler.isCopiedCalled);
-        keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_C));
-
-        assertTrue(keyHandler.isCopiedCalled);
-    }
 
     @Test
     public void keyPressed_safeKeyPressedCombination() {
@@ -232,35 +169,7 @@ public class ASIKeyHandlerTest {
             isSaveAsCalled = true ;
         }
 
-        boolean isUndoCalled = false ;
-        @Override
-        protected  void undoOperation(){
-            isUndoCalled = true ;
-        }
 
-        boolean isRedoCalled = false ;
-        @Override
-        protected  void redoOperation(){
-            isRedoCalled = true ;
-        }
-
-        boolean isCutCalled = false ;
-        @Override
-        protected  void cutOperation(){
-            isCutCalled = true ;
-        }
-
-        boolean isPasteCalled = false ;
-        @Override
-        protected  void pasteOperation(){
-            isPasteCalled = true ;
-        }
-
-        boolean isCopiedCalled = false ;
-        @Override
-        protected  void copyOperation(){
-            isCopiedCalled = true ;
-        }
     }
 
     private class EmptyKeyEvent extends KeyEvent {
