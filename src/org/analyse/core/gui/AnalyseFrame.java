@@ -48,7 +48,7 @@ import org.analyse.core.gui.action.MainActionListener;
 import org.analyse.core.gui.action.NavigationActionFactory;
 import org.analyse.core.gui.menu.AnalyseMenu;
 import org.analyse.core.gui.panel.HelpPanel;
-import org.analyse.core.gui.panel.Navigator;
+import org.analyse.core.gui.panel.navigator.Navigator;
 import org.analyse.core.gui.toolbar.AnalyseToolbar;
 import org.analyse.core.modules.AnalysePanel;
 import org.analyse.core.util.Constantes;
