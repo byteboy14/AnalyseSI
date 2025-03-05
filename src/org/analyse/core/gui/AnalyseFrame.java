@@ -143,7 +143,7 @@ public class AnalyseFrame extends JFrame {
 			}
 		});
 		/* Centre */
-		navigator = new Navigator(this);
+		navigator = new Navigator();
 		Main.splash.setProgress(50);
 
 		center = new JPanel(new BorderLayout());

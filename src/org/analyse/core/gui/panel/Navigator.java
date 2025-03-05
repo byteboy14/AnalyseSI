@@ -48,23 +48,17 @@ public class Navigator extends JPanel
 	 */
 	private static final long serialVersionUID = 5561301850688044080L;
 	private SimpleInternalFrame iFrame;
-    private Map<String, JPanel> hashtable;
-    private AnalyseFrame analyseFrame;
     private JPanel centre;
     private FormLayout layout;
     private PanelBuilder builder;
     private CellConstraints cc;
     private int inc;
     
-    public Navigator(AnalyseFrame analyseFrame)
+    public Navigator()
     {
         /* Construction du Navigator */
         super(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(4,4,0,0));
-        this.analyseFrame = analyseFrame;
-        
-        /* Initialise la hashtable contenant les Panels */
-        hashtable = new HashMap<String, JPanel>();
         
         /* Construction de la Frame Interne*/
         iFrame = new SimpleInternalFrame(Utilities.getLangueMessage(Constantes.MESSAGE_NAVIGATEUR));
