@@ -45,6 +45,8 @@ public class Navigator extends JPanel
     private PanelBuilder builder;
     private CellConstraints cc;
     private int inc;
+
+    private NavigatorButtonObserver observer ;
     
     public Navigator()
     {
@@ -62,6 +64,8 @@ public class Navigator extends JPanel
 		inc = 2;
 		
         this.add(iFrame);
+
+        observer = new NavigatorButtonObserver();
     }
 
     /**
@@ -71,6 +75,7 @@ public class Navigator extends JPanel
     public void addButton(BasicAction action)
     {
         NavigatorButton button = new NavigatorButton(action);
+        observer.addListener(button);
 
         builder.add(button, cc.xy(2, inc));
         inc += 2;
