@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 import javax.swing.UIManager;
 import org.analyse.core.gui.ParametrageWindow;
 import org.analyse.core.gui.AboutWindow;
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.gui.SplashScreen;
 import org.analyse.core.gui.action.GlobalActionCollection;
 import org.analyse.core.gui.statusbar.AnalyseStatusbar;

@@ -29,7 +29,7 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.modules.AnalysePanel;
 
 public class NavigationActionFactory implements ActionListener

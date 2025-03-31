@@ -43,7 +43,7 @@ import java.util.Map.Entry;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.analyse.core.gui.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.modules.AnalyseModule;
 import org.analyse.core.save.FiltreASI;
 import org.analyse.core.util.Constantes;
