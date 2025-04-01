@@ -62,7 +62,7 @@ import org.analyse.main.Main;
 /**
  * Fenetre principale d'AnalyseSI
  */
-public class AnalyseFrame extends JFrame {
+public class AnalyseFrame extends JFrame implements AnalyseFrameListener {
 	
 	public static final String DEFAULT = Constantes.DEFAULT ; 
 	public static final String HELP = Constantes.HELP;
@@ -96,6 +96,8 @@ public class AnalyseFrame extends JFrame {
 	/* Factory */
 	private NavigationActionFactory navigationActionFactory;
 
+	private AnalyseFrameObserver frameObserver ;
+
 	/**
 	 * Crée une nouvelle Fenetre AnalyseSI
 	 */
@@ -109,6 +111,9 @@ public class AnalyseFrame extends JFrame {
 		/* Gestion des évènements */
 		this.addWindowListener(new WindowHandler(this));
 		actionListener = new MainActionListener();
+		frameObserver = new AnalyseFrameObserver();
+		frameObserver.subscribeFrame(this );
+
 		navigationActionFactory = new NavigationActionFactory(this);
                 
                 /* Permet à la Frame de recevoir les KeyEvent */
@@ -281,12 +286,7 @@ public class AnalyseFrame extends JFrame {
 
 	}
 
-	/**
-	 * Modifie le panel courant.
-	 * 
-	 * @param c
-	 *            nouveau panel
-	 */
+	@Override
 	public void setPanel(AnalysePanel panelCurrent) {
 		if (this.panelCurrent != null)
 			center.remove(this.panelCurrent);
