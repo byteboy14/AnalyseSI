@@ -27,7 +27,7 @@ public class AnalyseFrameObserverTest {
 
         AnalyseFrameListener listener = new AnalyseFrameListener() {
             @Override
-            public void setPanel(AnalysePanel panelCurrent) {
+            public void onSetPanel(AnalysePanel panelCurrent) {
 
             }
         };
@@ -38,7 +38,7 @@ public class AnalyseFrameObserverTest {
     }
 
     @Test
-    public void onSetPanel_updatePanel(){
+    public void setPanel_updatePanel(){
 
         AnalysePanel panel = new AnalysePanel("Dummy") {
             @Override

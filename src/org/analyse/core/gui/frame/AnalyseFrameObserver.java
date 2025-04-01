@@ -11,6 +11,6 @@ public class AnalyseFrameObserver {
     }
 
     public void setPanel(AnalysePanel panel) {
-        listener.setPanel(panel);
+        listener.onSetPanel(panel);
     }
 }

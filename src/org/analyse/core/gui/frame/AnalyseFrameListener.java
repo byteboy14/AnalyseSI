@@ -10,5 +10,5 @@ public interface AnalyseFrameListener {
      * @param panelCurrent
      *            nouveau panel
      */
-    void setPanel(AnalysePanel panelCurrent);
+    void onSetPanel(AnalysePanel panelCurrent);
 }

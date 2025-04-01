@@ -165,7 +165,7 @@ public class AnalyseFrame extends JFrame implements AnalyseFrameListener {
 		Main.splash.setProgress(60);
 
 		/* Chargement du panel d'aide */
-                setPanel( helpPanel ) ;
+                onSetPanel( helpPanel ) ;
                 
 
 		/* Redimensionnement et mise au centre */
@@ -287,7 +287,7 @@ public class AnalyseFrame extends JFrame implements AnalyseFrameListener {
 	}
 
 	@Override
-	public void setPanel(AnalysePanel panelCurrent) {
+	public void onSetPanel(AnalysePanel panelCurrent) {
 		if (this.panelCurrent != null)
 			center.remove(this.panelCurrent);
 
