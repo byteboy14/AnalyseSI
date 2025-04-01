@@ -37,6 +37,21 @@ public class AnalyseFrameObserverTest {
 
     }
 
+    @Test
+    public void onSetPanel_updatePanel(){
+
+        AnalysePanel panel = new AnalysePanel("Dummy") {
+            @Override
+            public String getID() {
+                return super.getID();
+            }
+        };
+
+        observer.setPanel(panel);
+
+        assertSame(observer.getCurrentPanel().getID(), panel.getID());
+    }
+
 
     @After
     public void tearDown() throws Exception {
@@ -44,8 +59,19 @@ public class AnalyseFrameObserverTest {
 
     class AnalyseFrameObserverForTest extends AnalyseFrameObserver {
 
+        private AnalysePanel currentPanel ;
+
         public AnalyseFrameListener getListener() {
             return listener;
+        }
+
+        @Override
+        public void setPanel(AnalysePanel panel) {
+            this.currentPanel = panel ;
+        }
+
+        public AnalysePanel getCurrentPanel() {
+            return currentPanel;
         }
     }
 }

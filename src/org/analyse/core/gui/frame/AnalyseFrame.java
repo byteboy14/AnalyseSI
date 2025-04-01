@@ -114,7 +114,7 @@ public class AnalyseFrame extends JFrame implements AnalyseFrameListener {
 		frameObserver = new AnalyseFrameObserver();
 		frameObserver.subscribeFrame(this );
 
-		navigationActionFactory = new NavigationActionFactory(this);
+		navigationActionFactory = new NavigationActionFactory(frameObserver);
                 
                 /* Permet à la Frame de recevoir les KeyEvent */
                 this.setFocusable(true);

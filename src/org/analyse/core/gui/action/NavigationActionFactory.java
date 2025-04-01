@@ -29,17 +29,17 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 
-import org.analyse.core.gui.frame.AnalyseFrame;
+import org.analyse.core.gui.frame.AnalyseFrameObserver;
 import org.analyse.core.modules.AnalysePanel;
 
 public class NavigationActionFactory implements ActionListener
 {
-    public AnalyseFrame analyseFrame;
+    public AnalyseFrameObserver frameObserver;
     private Map<String, AnalysePanel> hashtable;
     
-    public NavigationActionFactory(AnalyseFrame analyseFrame)
+    public NavigationActionFactory(AnalyseFrameObserver frameObserver)
     {
-        this.analyseFrame = analyseFrame;
+        this.frameObserver = frameObserver;
         
         /* Initialise la hashtable contenant les Panels */
         hashtable = new HashMap<String, AnalysePanel>();
@@ -56,6 +56,6 @@ public class NavigationActionFactory implements ActionListener
     
     public void actionPerformed(ActionEvent e)
     {
-        analyseFrame.setPanel(hashtable.get(e.getActionCommand()));
+        frameObserver.setPanel(hashtable.get(e.getActionCommand()));
     }
 }
