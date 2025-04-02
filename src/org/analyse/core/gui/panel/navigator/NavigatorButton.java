@@ -53,6 +53,6 @@ class NavigatorButton extends JToggleButton implements NavigatorButtonListener
     }
 
     private void desactivateButton(){
-        setEnabled(false);
+        setSelected(false);
     }
 }
