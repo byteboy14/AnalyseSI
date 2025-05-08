@@ -47,7 +47,7 @@ import org.analyse.core.gui.action.MainActionListener;
 import org.analyse.core.gui.action.NavigationActionFactory;
 import org.analyse.core.gui.menu.AnalyseMenu;
 import org.analyse.core.gui.panel.HelpPanel;
-import org.analyse.core.gui.panel.Navigator;
+import org.analyse.core.gui.panel.navigator.Navigator;
 import org.analyse.core.gui.shortcuts.ASIKeyHandler;
 import org.analyse.core.gui.toolbar.AnalyseToolbar;
 import org.analyse.core.gui.windowfocus;
@@ -78,6 +78,7 @@ public class AnalyseFrame extends JFrame implements FrameListener{
 
 	/* Sauvegarde */
 	private Properties props;
+
 
 	/* Panel */
 	private Navigator navigator;
@@ -145,7 +146,7 @@ public class AnalyseFrame extends JFrame implements FrameListener{
 			}
 		});
 		/* Centre */
-		navigator = new Navigator(this);
+		navigator = new Navigator();
 		Main.splash.setProgress(50);
 
 		center = new JPanel(new BorderLayout());
