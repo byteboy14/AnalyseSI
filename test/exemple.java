@@ -4,8 +4,8 @@ import org.junit.Test;
 public class exemple {
 
     @Test
-    public void essaie(){
+    public void essaie() {
 
-        Assert.assertTrue(true );
+        Assert.assertTrue(true);
     }
 }

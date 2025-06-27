@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class NavigatorButtonObserver {
-    protected List<NavigatorButtonListener> listeners ;
+    protected List<NavigatorButtonListener> listeners;
 
-    public NavigatorButtonObserver(){
+    public NavigatorButtonObserver() {
         listeners = new ArrayList<>();
     }
 
@@ -17,9 +17,9 @@ class NavigatorButtonObserver {
 
     public void notifyOnNavigateTo(String actionName) {
 
-        listeners.forEach(listener ->{
+        listeners.forEach(listener -> {
             listener.onNavigateTo(actionName);
-        } );
+        });
     }
 }
 

@@ -1,18 +1,18 @@
 /*
  * 02/06/2004 - 16:17:34
- * 
+ *
  * ASIMeriseHandler.java - Copyright (C) 2004 Dreux Loic dreuxl@free.fr
- * 
- * 
+ *
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -20,22 +20,17 @@
 
 package org.analyse.merise.save.asi;
 
-import java.awt.Point;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.analyse.core.save.asi.ASIModuleHandler;
 import org.analyse.core.util.Constantes;
 import org.analyse.merise.gui.table.DictionnaireTable;
 import org.analyse.merise.main.MeriseModule;
-import org.analyse.merise.mcd.composant.MCDAssociation;
-import org.analyse.merise.mcd.composant.MCDComponent;
-import org.analyse.merise.mcd.composant.MCDEntite;
-import org.analyse.merise.mcd.composant.MCDLien;
-import org.analyse.merise.mcd.composant.MCDObjet;
+import org.analyse.merise.mcd.composant.*;
 
-public class ASIMeriseHandler extends ASIModuleHandler
-{
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ASIMeriseHandler extends ASIModuleHandler {
     private DictionnaireTable dictionnaireTable;
 
     private MCDComponent mcd;
@@ -50,8 +45,7 @@ public class ASIMeriseHandler extends ASIModuleHandler
 
     private static final int MCD = 1;
 
-    public ASIMeriseHandler(MeriseModule module)
-    {
+    public ASIMeriseHandler(MeriseModule module) {
         super(module);
 
         hashtable = new HashMap<String, String>();
@@ -60,13 +54,11 @@ public class ASIMeriseHandler extends ASIModuleHandler
         mcd = module.getMCDComponent();
     }
 
-    public void attribute(String aname, String value, boolean isSpecified)
-    {
+    public void attribute(String aname, String value, boolean isSpecified) {
         hashtable.put(aname, value);
     }
 
-    public void startElement(String name)
-    {
+    public void startElement(String name) {
         if ("DICTIONNAIRE".equalsIgnoreCase(name))
             etape = DICTIONNAIRE;
         else if ("MCD".equalsIgnoreCase(name))
@@ -95,8 +87,7 @@ public class ASIMeriseHandler extends ASIModuleHandler
         }
     }
 
-    public void endElement(String name)
-    {
+    public void endElement(String name) {
         switch (etape) {
             case DICTIONNAIRE:
                 if ("INFORMATION".equalsIgnoreCase(name)) {
@@ -115,9 +106,9 @@ public class ASIMeriseHandler extends ASIModuleHandler
                     MCDLien lien = new MCDLien();
 
                     lien.setElement(mcd.getElement(hashtable
-                            .get("elem1")),  Constantes.MCDENTITE1 );
+                            .get("elem1")), Constantes.MCDENTITE1);
                     lien.setElement(mcd.getElement(hashtable
-                            .get("elem2")),  Constantes.MCDENTITE2 );
+                            .get("elem2")), Constantes.MCDENTITE2);
 
                     lien.setCardMin(hashtable.get("cardmin"));
                     lien.setCardMax(hashtable.get("cardmax"));

@@ -1,22 +1,22 @@
 /*
  * 06/04/2003 - 13:56:06
- * 
+ *
  * MCDPanel.java - Copyright (C) 2003 Dreux Loic dreuxl@free.fr
- * 
- *  * Modifications : 
+ *
+ *  * Modifications :
  * ---------------
  *   Auteur : Bruno Dabo <bruno.dabo@lywoonsoftware.com>
  *   Date   : 2009 jan 22
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -24,42 +24,10 @@
 
 package org.analyse.merise.gui.panel;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import org.analyse.core.util.Constantes ;
-
-import javax.imageio.stream.FileImageOutputStream;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-
+import com.sun.imageio.plugins.png.PNGImageWriter;
 import org.analyse.core.gui.action.BasicAction;
 import org.analyse.core.modules.AnalysePanel;
+import org.analyse.core.util.Constantes;
 import org.analyse.core.util.GUIUtilities;
 import org.analyse.core.util.Utilities;
 import org.analyse.core.util.save.AnalyseFilter;
@@ -68,38 +36,37 @@ import org.analyse.main.Main;
 import org.analyse.merise.gui.dialog.EntiteDialog;
 import org.analyse.merise.gui.dialog.LienDialog;
 import org.analyse.merise.gui.table.DictionnaireTable;
-import org.analyse.merise.mcd.composant.MCDAssociation;
-import org.analyse.merise.mcd.composant.MCDComponent;
-import org.analyse.merise.mcd.composant.MCDEntite;
-import org.analyse.merise.mcd.composant.MCDLien;
-import org.analyse.merise.mcd.composant.MCDObjet;
-import org.analyse.merise.mcd.composant.MLDComponent;
-import org.analyse.merise.mcd.composant.MPDComponent;
+import org.analyse.merise.mcd.composant.*;
 import org.analyse.merise.sql.SQLCommand;
-import org.analyse.merise.mcd.composant.MLDCommand; 
 
-import com.sun.imageio.plugins.png.PNGImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class MCDPanel extends AnalysePanel
-{
-	private static final long serialVersionUID = -1318663913915137489L;
+public class MCDPanel extends AnalysePanel {
+    private static final long serialVersionUID = -1318663913915137489L;
 
-	private ActionHandler actionHandler;
+    private ActionHandler actionHandler;
 
     private BasicAction addEntite, addAssociation, addLien, changeCurseur;
-    private BasicAction modParametrage ;
+    private BasicAction modParametrage;
     private BasicAction delLien, delObjet;
     private BasicAction modEntite, modAssociation, modLien;
-    private BasicAction verif, buildMPD, buildMLD ;
+    private BasicAction verif, buildMPD, buildMLD;
     private BasicAction saveGraphic;
 
     private MCDComponent mcdComponent;
     private MLDComponent mldComponent;
     private MPDComponent mpdComponent;
 
-    private SQLCommand sqlCommand ;
-    private MLDCommand mldCommand ;
-    
+    private SQLCommand sqlCommand;
+    private MLDCommand mldCommand;
+
     private JPanel toolbar;
 
     private JPopupMenu popupLien, popupEntite, popupAssociation,
@@ -107,30 +74,29 @@ public class MCDPanel extends AnalysePanel
 
     private JFileChooser chooser;
 
-    private JToggleButton btnLien ,btnCurseur ;
+    private JToggleButton btnLien, btnCurseur;
 
-    private EntiteDialog entiteDialog = null ;
+    private EntiteDialog entiteDialog = null;
 
     private LienDialog lienDialog;
 
     private MCDObjet objet;
 
     private MCDLien lien;
-    
+
     private String typeAction = Constantes.ADD_ENT;
 
     public MCDPanel(MCDComponent mcdComponent, MPDComponent mpdComponent,
-            SQLCommand sqlCommand,  MLDComponent mldComponent, MLDCommand mldCommand )
-    {
+                    SQLCommand sqlCommand, MLDComponent mldComponent, MLDCommand mldCommand) {
         super(Constantes.MCD);
-        
+
         this.mcdComponent = mcdComponent;
-        this.mpdComponent = mpdComponent;        
+        this.mpdComponent = mpdComponent;
         this.mldComponent = mldComponent;
         this.sqlCommand = sqlCommand;
         this.mldCommand = mldCommand;
         this.actionHandler = new ActionHandler();
-        
+
         initAction();
         initToolbar();
         initPopup();
@@ -152,35 +118,34 @@ public class MCDPanel extends AnalysePanel
         this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 3));
 
         this.setLayout(new BorderLayout());
-        mcdComponent.setBackground(Constantes.COULEUR_FOND_MCD) ;
-        JScrollPane jsp = new JScrollPane(mcdComponent) ;
-         
-        this.add(BorderLayout.CENTER, jsp );
+        mcdComponent.setBackground(Constantes.COULEUR_FOND_MCD);
+        JScrollPane jsp = new JScrollPane(mcdComponent);
+
+        this.add(BorderLayout.CENTER, jsp);
         this.add(BorderLayout.NORTH, toolbar);
 
         mcdComponent.addMouseListener(new MouseHandler());
-        
-		// Utilisation de la touche SUPPR ou BACK_SPACE pour supprimer la sélection
-		mcdComponent.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "suppr");
-		mcdComponent.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "suppr");
-		mcdComponent.getActionMap().put("suppr",  deleteObjectsAction);
+
+        // Utilisation de la touche SUPPR ou BACK_SPACE pour supprimer la sélection
+        mcdComponent.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "suppr");
+        mcdComponent.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "suppr");
+        mcdComponent.getActionMap().put("suppr", deleteObjectsAction);
     }
-    
+
     private Action deleteObjectsAction = new AbstractAction() {
 
-		private static final long serialVersionUID = 4024872425170460547L;
+        private static final long serialVersionUID = 4024872425170460547L;
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (mcdComponent.sizeSelection() > 0)
-				deleteObjects();
-		}
-	};
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (mcdComponent.sizeSelection() > 0)
+                deleteObjects();
+        }
+    };
 
-    private void initToolbar()
-    {
+    private void initToolbar() {
         toolbar = new JPanel();
         toolbar.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -203,21 +168,21 @@ public class MCDPanel extends AnalysePanel
         toolbar.add(btnLien = new JToggleButton(addLien) {
 
             {
-                setText("");                
+                setText("");
                 addMouseListener(Main.statusbar.getHandler());
             }
         });
-        
+
         toolbar.add(btnCurseur = new JToggleButton(changeCurseur) {
 
             {
                 setText("");
                 setSelected(true);
-                doClick() ;   // #505822
+                doClick();   // #505822
                 addMouseListener(Main.statusbar.getHandler());
             }
         });
-        
+
         toolbar.add(new JToolBar.Separator());
 
         toolbar.add(new JButton(saveGraphic) {
@@ -228,13 +193,12 @@ public class MCDPanel extends AnalysePanel
         });
     }
 
-    private void initPopup()
-    {
+    private void initPopup() {
         popupLien = new JPopupMenu();
 
         popupLien.add(new JMenuItem(modLien) {
 
-            {            	
+            {
                 addMouseListener(Main.statusbar.getHandler());
             }
         });
@@ -247,7 +211,7 @@ public class MCDPanel extends AnalysePanel
                 addMouseListener(Main.statusbar.getHandler());
             }
         });
-        
+
         popupCurseur = new JPopupMenu();
 
         popupCurseur.add(new JMenuItem(changeCurseur) {
@@ -300,39 +264,38 @@ public class MCDPanel extends AnalysePanel
                 addMouseListener(Main.statusbar.getHandler());
             }
         });
-        
-        
+
+
     }
 
-    private void initAction()
-    {        
+    private void initAction() {
         addEntite = new BasicAction(
-        		Utilities.getLangueMessage (Constantes.MESSAGE_ENTITE),
-        		Utilities.getLangueMessage (Constantes.MESSAGE_AJOUTER_ENTITE),
-        		Constantes.ADD_ENT,
+                Utilities.getLangueMessage(Constantes.MESSAGE_ENTITE),
+                Utilities.getLangueMessage(Constantes.MESSAGE_AJOUTER_ENTITE),
+                Constantes.ADD_ENT,
                 GUIUtilities.getImageIcon(Constantes.FILE_PNG_ENTITE), 0, null);
         addEntite.addActionListener(actionHandler);
-        
+
         changeCurseur = new BasicAction(Constantes.MESSAGE_CURSEUR, Constantes.MESSAGE_CHANGE_CURSEUR, Constantes.CHANGE_CURSEUR,
-                GUIUtilities.getImageIcon(Constantes.FILE_PNG_CURSEUR ), 0, null);
+                GUIUtilities.getImageIcon(Constantes.FILE_PNG_CURSEUR), 0, null);
         changeCurseur.addActionListener(actionHandler);
-        
-        addAssociation = new BasicAction(Utilities.getLangueMessage (Constantes.MESSAGE_ASSOCIATION),
-        		Utilities.getLangueMessage (Constantes.MESSAGE_AJOUTER_ASSOCIATION),
-                Constantes.ADD_ASS, 
-                GUIUtilities.getImageIcon(Constantes.FILE_PNG_ASSOCIATION), 0, null) ;
-        
+
+        addAssociation = new BasicAction(Utilities.getLangueMessage(Constantes.MESSAGE_ASSOCIATION),
+                Utilities.getLangueMessage(Constantes.MESSAGE_AJOUTER_ASSOCIATION),
+                Constantes.ADD_ASS,
+                GUIUtilities.getImageIcon(Constantes.FILE_PNG_ASSOCIATION), 0, null);
+
         addAssociation.addActionListener(actionHandler);
 
         addLien = new BasicAction(
-        		Utilities.getLangueMessage (Constantes.MESSAGE_LIEN),
-        		Utilities.getLangueMessage (Constantes.MESSAGE_AJOUTER_LIEN),
-        		Constantes.ADD_LIEN,
+                Utilities.getLangueMessage(Constantes.MESSAGE_LIEN),
+                Utilities.getLangueMessage(Constantes.MESSAGE_AJOUTER_LIEN),
+                Constantes.ADD_LIEN,
                 GUIUtilities.getImageIcon(Constantes.FILE_PNG_LIEN), 0, null);
         addLien.addActionListener(actionHandler);
 
         delLien = new BasicAction("Supprimer", "Supprimer le lien", Constantes.DEL_LIEN,
-                GUIUtilities.getImageIcon(Constantes.FILE_PNG_DELETE ), 0, null);
+                GUIUtilities.getImageIcon(Constantes.FILE_PNG_DELETE), 0, null);
         delLien.addActionListener(actionHandler);
 
         delObjet = new BasicAction("Supprimer", "Supprimer l'objet",
@@ -352,30 +315,29 @@ public class MCDPanel extends AnalysePanel
         modLien.addActionListener(actionHandler);
 
         // test multi-langage
-        verif = new BasicAction("", Utilities.getLangueMessage ("verification"),
+        verif = new BasicAction("", Utilities.getLangueMessage("verification"),
                 Constantes.VERIF_MCD, GUIUtilities.getImageIcon(Constantes.FILE_PNG_OK), 0, null);
         verif.addActionListener(actionHandler);
 
         buildMPD = new BasicAction("",
-        		Utilities.getLangueMessage ("generation_mpd"), Constantes.BUILD_MPD,
+                Utilities.getLangueMessage("generation_mpd"), Constantes.BUILD_MPD,
                 GUIUtilities.getImageIcon(Constantes.FILE_PNG_BUILD_MPD), 0, KeyStroke
-                        .getKeyStroke(KeyEvent.VK_F5, 0));
-        buildMPD.addActionListener(actionHandler);      
-        
+                .getKeyStroke(KeyEvent.VK_F5, 0));
+        buildMPD.addActionListener(actionHandler);
+
         modParametrage = new BasicAction("",
-        		Utilities.getLangueMessage ("parametrage"), Constantes.PARAMETRAGE,
+                Utilities.getLangueMessage("parametrage"), Constantes.PARAMETRAGE,
                 GUIUtilities.getImageIcon(Constantes.FILE_PNG_PARAMETRAGE), 0, KeyStroke
-                        .getKeyStroke(KeyEvent.VK_F5, 0));
+                .getKeyStroke(KeyEvent.VK_F5, 0));
         modParametrage.addActionListener(actionHandler);
 
-        saveGraphic = new BasicAction(Utilities.getLangueMessage ("sauvegarde_png"),
+        saveGraphic = new BasicAction(Utilities.getLangueMessage("sauvegarde_png"),
                 Utilities.getLangueMessage("help_sauvegarde_png"), Constantes.SAVE_GRAPH,
                 GUIUtilities.getImageIcon(Constantes.FILE_PNG_SAVE), 0, null);
         saveGraphic.addActionListener(actionHandler);
     }
 
-    private String chooseFile()
-    {
+    private String chooseFile() {
         if (chooser.showDialog(org.analyse.main.Main.analyseFrame, null) == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getAbsolutePath();
         }
@@ -383,111 +345,105 @@ public class MCDPanel extends AnalysePanel
         return null;
     }
 
-    public BasicAction getVerif()
-    {
+    public BasicAction getVerif() {
         return verif;
     }
 
-    public BasicAction getBuildLMD()
-    {
+    public BasicAction getBuildLMD() {
         return buildMPD;
     }
 
 
-    public BasicAction getBuildLMLD()
-    {
+    public BasicAction getBuildLMLD() {
         return buildMLD;
     }
 
-    private void initDialog()
-    {
-        entiteDialog = new EntiteDialog(mcdComponent.getData());         
+    private void initDialog() {
+        entiteDialog = new EntiteDialog(mcdComponent.getData());
         lienDialog = new LienDialog();
     }
-    
+
     //Désélectionne tous les JToggleButton de la toolbar et séléctionne sauf
     //Il y a toujours un bouton pressé (à la manière de radio boutons)
-    private void deselectToolbarButton(JToggleButton sauf){
-    	for(Component comp: toolbar.getComponents()){
-    		if(comp instanceof JToggleButton && comp!=sauf){
-    			((JToggleButton) comp).setSelected(false);
-    		}
-    	}
-    	sauf.setSelected(true);
-    	
-    }
-    
-	private void deleteObjects() {
-		DictionnaireTable data = mcdComponent.getData();
-		String mess = Utilities
-				.getLangueMessage("supprimer_objet_selection");
-		if (mcdComponent.sizeSelection() > 1)
-			mess = "Voulez-vous vraiment supprimer les "
-					+ mcdComponent.sizeSelection()
-					+ " objets sélectionnés ?";
-		if (JOptionPane.showConfirmDialog(null, mess,
-				Utilities.getLangueMessage("analysesi"),
-				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-		for (MCDObjet mcdObjet : mcdComponent.removeObjets())
-			data.deleteObserver(mcdObjet);
-		}
-	}
+    private void deselectToolbarButton(JToggleButton sauf) {
+        for (Component comp : toolbar.getComponents()) {
+            if (comp instanceof JToggleButton && comp != sauf) {
+                ((JToggleButton) comp).setSelected(false);
+            }
+        }
+        sauf.setSelected(true);
 
-    private class ActionHandler implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
+    }
+
+    private void deleteObjects() {
+        DictionnaireTable data = mcdComponent.getData();
+        String mess = Utilities
+                .getLangueMessage("supprimer_objet_selection");
+        if (mcdComponent.sizeSelection() > 1)
+            mess = "Voulez-vous vraiment supprimer les "
+                    + mcdComponent.sizeSelection()
+                    + " objets sélectionnés ?";
+        if (JOptionPane.showConfirmDialog(null, mess,
+                Utilities.getLangueMessage("analysesi"),
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            for (MCDObjet mcdObjet : mcdComponent.removeObjets())
+                data.deleteObserver(mcdObjet);
+        }
+    }
+
+    private class ActionHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
             String action = e.getActionCommand();
-            
+
             if (action.equals(Constantes.ADD_ENT)) {
-            	typeAction = Constantes.ADD_ENT;
-            	mcdComponent.setEnabled(false);
-            	deselectToolbarButton((JToggleButton)e.getSource());
-            } 
+                typeAction = Constantes.ADD_ENT;
+                mcdComponent.setEnabled(false);
+                deselectToolbarButton((JToggleButton) e.getSource());
+            }
             if (action.equals(Constantes.ADD_ASS)) {
-            	typeAction = Constantes.ADD_ASS;
-            	mcdComponent.setEnabled(false);
-            	deselectToolbarButton((JToggleButton)e.getSource());
-            } 
-            
+                typeAction = Constantes.ADD_ASS;
+                mcdComponent.setEnabled(false);
+                deselectToolbarButton((JToggleButton) e.getSource());
+            }
+
             if (action.equals(Constantes.ADD_LIEN)) {
-            	typeAction = Constantes.ADD_LIEN;
-            	mcdComponent.setEnabled(true);
-            	deselectToolbarButton((JToggleButton)e.getSource());
-            	if (btnLien.getSelectedObjects() != null)
+                typeAction = Constantes.ADD_LIEN;
+                mcdComponent.setEnabled(true);
+                deselectToolbarButton((JToggleButton) e.getSource());
+                if (btnLien.getSelectedObjects() != null)
                     mcdComponent.addLien();
-            } 
-            
-            if(action.equals(Constantes.CHANGE_CURSEUR)) {
-            	typeAction = Constantes.CHANGE_CURSEUR;
-            	mcdComponent.annulerCreerLien();
-            	mcdComponent.setEnabled(true);
-                deselectToolbarButton((JToggleButton)e.getSource());  	
-            } 
+            }
+
+            if (action.equals(Constantes.CHANGE_CURSEUR)) {
+                typeAction = Constantes.CHANGE_CURSEUR;
+                mcdComponent.annulerCreerLien();
+                mcdComponent.setEnabled(true);
+                deselectToolbarButton((JToggleButton) e.getSource());
+            }
             if (action.equals(Constantes.DEL_LIEN)) {
-                String mess = Utilities.getLangueMessage ("supprimer_lien_selection") ;
-                if (JOptionPane.showConfirmDialog(null, mess, Utilities.getLangueMessage ("analysesi"),
+                String mess = Utilities.getLangueMessage("supprimer_lien_selection");
+                if (JOptionPane.showConfirmDialog(null, mess, Utilities.getLangueMessage("analysesi"),
                         JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
                     return;
                 mcdComponent.removeLien();
-            } 
-            
+            }
+
             if (action.equals(Constantes.DEL_OBJET)) {
-            	deleteObjects();
-            } 
+                deleteObjects();
+            }
             if (action.equals(Constantes.MOD_OBJET)) {
                 entiteDialog.load(objet);
-            } 
+            }
             if (action.equals(Constantes.MOD_LIEN)) {
                 lienDialog.load(lien);
-            } 
+            }
             if (action.equals(Constantes.VERIF_MCD)) {
                 mcdComponent.isCorrect(Constantes.SHOW_ALL);
-            } 
+            }
             if (action.equals(Constantes.BUILD_MPD)) {
-                if ( mcdComponent.buildMPD(mpdComponent,  Constantes.CREATE_MCD) ) {                	
-                	mpdComponent.buildSQL(mcdComponent.getData(), sqlCommand);
-                	mldComponent.buildMLD(mpdComponent, mldCommand);                                         
+                if (mcdComponent.buildMPD(mpdComponent, Constantes.CREATE_MCD)) {
+                    mpdComponent.buildSQL(mcdComponent.getData(), sqlCommand);
+                    mldComponent.buildMLD(mpdComponent, mldCommand);
                 }
             } 
             /*
@@ -498,8 +454,8 @@ public class MCDPanel extends AnalysePanel
                         mldComponent.buildMLD(mldCommand);                    
                     }
             }
-              */  
-                
+              */
+
             if (action.equals(Constantes.SAVE_GRAPH)) {
                 String fileName = chooseFile();
                 if (fileName == null)
@@ -507,7 +463,7 @@ public class MCDPanel extends AnalysePanel
 
                 if (!Utilities.getExtension(fileName).equals(Constantes.PNG_MINUSCULE)
                         && !Utilities.getExtension(fileName).equals(Constantes.PNG))
-                    fileName = fileName + "." + Constantes.PNG_MINUSCULE ;
+                    fileName = fileName + "." + Constantes.PNG_MINUSCULE;
 
                 mcdComponent.enleverFocus();
 
@@ -552,29 +508,26 @@ public class MCDPanel extends AnalysePanel
         }
     }
 
-    private class MouseHandler extends MouseAdapter
-    {
-    	public void mousePressed(MouseEvent me){
+    private class MouseHandler extends MouseAdapter {
+        public void mousePressed(MouseEvent me) {
 
-    		if (me.getButton() == MouseEvent.BUTTON1) {		
-	            if (typeAction.equals(Constantes.ADD_ENT)) {
-	                DictionnaireTable data = mcdComponent.getData();          
-	                data.addObserver(mcdComponent.addEntite(me.getX(), me.getY()));
-	                
-	            } else if (typeAction.equals(Constantes.ADD_ASS)) {
-	                DictionnaireTable data = mcdComponent.getData();
-	                data.addObserver(mcdComponent.addAssociation(me.getX(), me.getY()));
-	            } 
-    		}
-    		else{
-    			/* on repasse en mode curseur*/
-            	typeAction = Constantes.CHANGE_CURSEUR;
+            if (me.getButton() == MouseEvent.BUTTON1) {
+                if (typeAction.equals(Constantes.ADD_ENT)) {
+                    DictionnaireTable data = mcdComponent.getData();
+                    data.addObserver(mcdComponent.addEntite(me.getX(), me.getY()));
+
+                } else if (typeAction.equals(Constantes.ADD_ASS)) {
+                    DictionnaireTable data = mcdComponent.getData();
+                    data.addObserver(mcdComponent.addAssociation(me.getX(), me.getY()));
+                }
+            } else {
+                /* on repasse en mode curseur*/
+                typeAction = Constantes.CHANGE_CURSEUR;
                 deselectToolbarButton(btnCurseur);
-    		}
-    	}
-    	
-        public void mouseReleased(MouseEvent e)
-        {
+            }
+        }
+
+        public void mouseReleased(MouseEvent e) {
             objet = null;
             lien = null;
             //if (e.isPopupTrigger()) Ne marche pas avec le JDK d'IBM
@@ -594,25 +547,23 @@ public class MCDPanel extends AnalysePanel
                     popupSaveGraphic.show(e.getComponent(), e.getX(), e.getY());
                 }
 
-            }
-            else if (e.getButton() == MouseEvent.BUTTON1 && typeAction.equals(Constantes.ADD_LIEN)) {
-            	mcdComponent.addLien();
+            } else if (e.getButton() == MouseEvent.BUTTON1 && typeAction.equals(Constantes.ADD_LIEN)) {
+                mcdComponent.addLien();
             }
         }
 
-        public void mouseClicked(MouseEvent e)
-        {
-            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 
-            		&& typeAction.equals(Constantes.CHANGE_CURSEUR)) {
+        public void mouseClicked(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2
+                    && typeAction.equals(Constantes.CHANGE_CURSEUR)) {
                 Object o = mcdComponent.getObjectFromLocation(e.getX(), e
                         .getY());
                 if (o instanceof MCDLien) {
                     lienDialog.load((MCDLien) o);
                 } else if (o instanceof MCDAssociation) {
-                	entiteDialog = new EntiteDialog(mcdComponent.getData());
+                    entiteDialog = new EntiteDialog(mcdComponent.getData());
                     entiteDialog.load((MCDAssociation) o);
                 } else if (o instanceof MCDEntite) {
-                	entiteDialog = new EntiteDialog(mcdComponent.getData());
+                    entiteDialog = new EntiteDialog(mcdComponent.getData());
                     entiteDialog.load((MCDObjet) o);
                 }
             }

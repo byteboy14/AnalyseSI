@@ -6,11 +6,12 @@ import org.junit.Test;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ASIKeyHandlerTest {
 
-    private TestableASIKeyHandler keyHandler ;
+    private TestableASIKeyHandler keyHandler;
 
     @Before
     public void setUp() {
@@ -72,7 +73,6 @@ public class ASIKeyHandlerTest {
     }
 
 
-
     @Test
     public void keyPressed_safeKeyPressedCombination() {
 
@@ -84,7 +84,7 @@ public class ASIKeyHandlerTest {
         keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
 
         assertTrue(keyHandler.isSaveCalled);
-        keyHandler.isSaveCalled = false ;
+        keyHandler.isSaveCalled = false;
 
         keyHandler.keyPressed(new EmptyKeyEvent(KeyEvent.VK_S));
         assertFalse(keyHandler.isSaveCalled);
@@ -140,33 +140,32 @@ public class ASIKeyHandlerTest {
     private class TestableASIKeyHandler extends ASIKeyHandler {
 
 
-
-        boolean isSaveCalled = false ;
+        boolean isSaveCalled = false;
 
         @Override
-        protected  void saveASI(){
-            isSaveCalled = true ;
+        protected void saveASI() {
+            isSaveCalled = true;
         }
 
-        boolean isNewCalled = false ;
+        boolean isNewCalled = false;
 
         @Override
-        protected  void newASIProject(){
-            isNewCalled = true ;
+        protected void newASIProject() {
+            isNewCalled = true;
         }
 
-        boolean isOpenCalled = false ;
+        boolean isOpenCalled = false;
 
         @Override
-        protected  void openASIProject(){
-            isOpenCalled = true ;
+        protected void openASIProject() {
+            isOpenCalled = true;
         }
 
-        boolean isSaveAsCalled = false ;
+        boolean isSaveAsCalled = false;
 
         @Override
-        protected  void saveAsASI(){
-            isSaveAsCalled = true ;
+        protected void saveAsASI() {
+            isSaveAsCalled = true;
         }
 
 
@@ -174,7 +173,7 @@ public class ASIKeyHandlerTest {
 
     private class EmptyKeyEvent extends KeyEvent {
 
-        public EmptyKeyEvent(int keyCode){
+        public EmptyKeyEvent(int keyCode) {
             super(new Component() {
             }, 0, 0, 0, 0);
 

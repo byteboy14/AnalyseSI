@@ -1,18 +1,18 @@
 /*
  * 02/26/2002 - 13:43:47
- * 
+ *
  * MCDAssociation - Copyright (C) 2002 Dreux Loic dreuxl@free.fr
- * 
- * 
+ *
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -20,47 +20,42 @@
 
 package org.analyse.merise.mcd.composant;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import org.analyse.merise.gui.table.DictionnaireTable;
+
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
-import org.analyse.merise.gui.table.DictionnaireTable;
-
-public class MCDAssociation extends MCDObjet
-{
-    /** Font de l'association */
+public class MCDAssociation extends MCDObjet {
+    /**
+     * Font de l'association
+     */
     private Font font;
 
-    /** Permet de calculer la taille */
+    /**
+     * Permet de calculer la taille
+     */
     private FontMetrics fm;
 
-    public MCDAssociation(MCDComponent mcd)
-    {
-        this(mcd, "Association " + (getIndex() + 1), 
-        		getIndex() * 20 % 200, getIndex() * 20 % 200);
+    public MCDAssociation(MCDComponent mcd) {
+        this(mcd, "Association " + (getIndex() + 1),
+                getIndex() * 20 % 200, getIndex() * 20 % 200);
     }
 
-    public MCDAssociation(MCDComponent mcd, int x, int y)
-    {
-    	
-        this(mcd, "Association " + (getIndex ()+ 1), x, y);
+    public MCDAssociation(MCDComponent mcd, int x, int y) {
+
+        this(mcd, "Association " + (getIndex() + 1), x, y);
     }
-    
-    public MCDAssociation(MCDComponent mcd, String name, int x, int y)
-    {
+
+    public MCDAssociation(MCDComponent mcd, String name, int x, int y) {
         super(mcd, name, x, y, 150, 50);
     }
 
     /**
      * Recalcule la taille de l'association.
      */
-    public void updateSize()
-    {
+    public void updateSize() {
         int gw = fm.stringWidth(name);
 
         for (int i = 0; i < sizeInformation(); i++)
@@ -78,8 +73,7 @@ public class MCDAssociation extends MCDObjet
     /**
      * Affichage de l'association.
      */
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         if (fm == null) {
             this.font = mcd.getFont();
             this.fm = mcd.getFontMetrics(font);
@@ -114,16 +108,15 @@ public class MCDAssociation extends MCDObjet
      * Revoie tous les codes des informations sans le premier, c'est à dire sans
      * l'identifiant.
      */
-    public List<String> getInformations()
-    {
+    public List<String> getInformations() {
         return informations;
     }
-    public void setInformations( List<String> v ) {
-        this.informations = v ; 
+
+    public void setInformations(List<String> v) {
+        this.informations = v;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "MCDAssociation : " + info();
     }
 

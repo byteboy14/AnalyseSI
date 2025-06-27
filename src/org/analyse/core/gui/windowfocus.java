@@ -13,18 +13,18 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 /**
- *
  * ROUX Constant, MICHEL Arthur
  */
-public class windowfocus implements WindowFocusListener, MouseListener{
+public class windowfocus implements WindowFocusListener, MouseListener {
     private AnalyseFrame af;
     private boolean activated;
-    
-    public windowfocus(AnalyseFrame af){
+
+    public windowfocus(AnalyseFrame af) {
         this.af = af;
         this.af.addWindowFocusListener(this);
         this.af.addMouseListener(this);
     }
+
     @Override
     public void windowGainedFocus(WindowEvent e) {
     }
@@ -33,8 +33,8 @@ public class windowfocus implements WindowFocusListener, MouseListener{
     public void windowLostFocus(WindowEvent e) {
         this.setActivated(false);
     }
-    
-    public void setActivated(boolean b){
+
+    public void setActivated(boolean b) {
         this.activated = b;
     }
 

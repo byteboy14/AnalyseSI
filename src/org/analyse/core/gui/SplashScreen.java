@@ -2,7 +2,7 @@
  * File        : SplashScreen2.java
  * Date      : 1 avr. 2004
  * Author   : loyl
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,31 +19,20 @@
  */
 package org.analyse.core.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JWindow;
-
 import org.analyse.core.util.Constantes;
 import org.analyse.core.util.GUIUtilities;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author loyl
  */
-public class SplashScreen extends JWindow
-{
+public class SplashScreen extends JWindow {
 
     private JProgressBar bar;
 
-    public SplashScreen()
-    {
+    public SplashScreen() {
         super();
 
         JPanel p = new JPanel(new BorderLayout());
@@ -51,8 +40,7 @@ public class SplashScreen extends JWindow
         p.setBorder(BorderFactory.createEtchedBorder());
 
         JPanel pBar = new JPanel(new FlowLayout()) {
-            public void paintComponent(Graphics g)
-            {
+            public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
                 g.setColor(Color.BLACK);
@@ -77,8 +65,7 @@ public class SplashScreen extends JWindow
         this.setVisible(true);
     }
 
-    public void setProgress(int progress)
-    {
+    public void setProgress(int progress) {
         bar.setValue(progress);
     }
 }

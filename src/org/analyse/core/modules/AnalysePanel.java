@@ -1,10 +1,10 @@
 /*
  * 05/26/2003 - 09:53:06
  *
- * PanelModule.java - 
+ * PanelModule.java -
  * Copyright (C) 2003 Dreux Loic
  * dreuxl@free.fr
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,21 +23,16 @@
 
 package org.analyse.core.modules;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JPanel;
-
 import org.analyse.core.gui.shortcuts.ASIKeyHandler;
-import org.analyse.core.util.save.AnalyseSave;
-import org.analyse.main.Main;
+
+import javax.swing.*;
 
 /**
  * La classe panel Module est dérivé <code>JPanel</code> et peut implémenter
  * les interfaces <code>UndoInterface</code> et <code>ClipboardInterface</code>.
  */
 
-public abstract class AnalysePanel extends JPanel
-{
+public abstract class AnalysePanel extends JPanel {
     private boolean undoEnabled;
 
     private boolean redoEnabled;
@@ -45,7 +40,7 @@ public abstract class AnalysePanel extends JPanel
     private boolean copyEnabled;
 
     private boolean pasteEnabled;
-    
+
     private String ID;
 
     public AnalysePanel(String ID) {
@@ -54,7 +49,7 @@ public abstract class AnalysePanel extends JPanel
         redoEnabled = this instanceof UndoInterface;
         copyEnabled = this instanceof ClipboardInterface;
         pasteEnabled = this instanceof ClipboardInterface;
-        
+
         this.setFocusable(true);
         this.addKeyListener(new ASIKeyHandler());
     }
@@ -65,18 +60,18 @@ public abstract class AnalysePanel extends JPanel
     public String getID() {
         return ID;
     }
-    
+
     /**
      * Indique si le bouton Undo doit etre actif.
      */
-    public boolean getUndoEnabled()  {
+    public boolean getUndoEnabled() {
         return this instanceof UndoInterface && undoEnabled;
     }
 
     /**
      * Indique si le bouton Redo doit etre actif.
      */
-    public boolean getRedoEnabled()  {
+    public boolean getRedoEnabled() {
         return this instanceof UndoInterface && redoEnabled;
     }
 

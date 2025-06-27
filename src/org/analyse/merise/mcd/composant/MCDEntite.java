@@ -1,18 +1,18 @@
 /*
  * 02/25/2002 - 13:29:38
- * 
+ *
  * MCDEntite - Copyright (C) 2002 DreugetX() Loic dreuxl@free.fr
- * 
- * 
+ *
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -20,49 +20,44 @@
 
 package org.analyse.merise.mcd.composant;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import org.analyse.merise.gui.table.DictionnaireTable;
+
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.analyse.merise.gui.table.DictionnaireTable;
-
-public class MCDEntite extends MCDObjet
-{
-    /** Police de l'objet */
+public class MCDEntite extends MCDObjet {
+    /**
+     * Police de l'objet
+     */
     private Font font;
 
-    /** Permet de calculer la taille des objets */
+    /**
+     * Permet de calculer la taille des objets
+     */
     private FontMetrics fm;
 
-    
-    public MCDEntite(MCDComponent mcd)
-    {
-        this(mcd, "Entite " + (getIndex ()+ 1),
-                getIndex () * 20 % 200,  getIndex () * 20 % 200);
-    }
-    
-    public MCDEntite(MCDComponent mcd, int x, int y)
-    {
-    	
-        this(mcd, "Entite " + (getIndex ()+ 1), x, y);
+
+    public MCDEntite(MCDComponent mcd) {
+        this(mcd, "Entite " + (getIndex() + 1),
+                getIndex() * 20 % 200, getIndex() * 20 % 200);
     }
 
-    public MCDEntite(MCDComponent mcd, String name, int x, int y)
-    {
+    public MCDEntite(MCDComponent mcd, int x, int y) {
+
+        this(mcd, "Entite " + (getIndex() + 1), x, y);
+    }
+
+    public MCDEntite(MCDComponent mcd, String name, int x, int y) {
         super(mcd, name, x, y, 10, 10);
     }
 
     /**
      * Affichage de l'objet.
      */
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         if (fm == null) {
             this.font = mcd.getFont();
             this.fm = mcd.getFontMetrics(font);
@@ -104,8 +99,7 @@ public class MCDEntite extends MCDObjet
     /**
      * Calcul la taille de l'entité à n'éxécuter que lors du repaint
      */
-    public void updateSize()
-    {
+    public void updateSize() {
         int gw = fm.stringWidth(name);
 
         for (int i = 0; i < sizeInformation(); i++)
@@ -124,30 +118,26 @@ public class MCDEntite extends MCDObjet
      * Change l'identifiant de l'entité. Déplace le nouvelIdentifiant en
      * première place du Vector information, il est alors pris comme
      * identifiant.
-     * 
-     * @param nouvelIdentifiant
-     *            index du nouvel identifiant
+     *
+     * @param nouvelIdentifiant index du nouvel identifiant
      */
-    public void changerIdentifiant(int nouvelIdentifiant)
-    {
+    public void changerIdentifiant(int nouvelIdentifiant) {
         moveInformations(0, nouvelIdentifiant);
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "MCDEntite : " + info();
     }
-    
-    public void setInformations( List<String> v ) {
+
+    public void setInformations(List<String> v) {
     }
-    
+
     /**
      * Revoie tous les codes des informations sans le premier, c'est à dire sans
      * l'identifiant.
      */
-    public List<String> getInformations()
-    {
-    	List<String> tmp = new ArrayList<String>();
+    public List<String> getInformations() {
+        List<String> tmp = new ArrayList<String>();
         for (int i = 1; i < informations.size(); i++)
             tmp.add(informations.get(i));
         return tmp;

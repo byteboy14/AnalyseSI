@@ -1,10 +1,10 @@
 /*
  * 02/03/2004 - 14:57:28
  *
- * AnalyseFilter.java - 
+ * AnalyseFilter.java -
  * Copyright (C) 2004 Dreux Loic
  * dreuxl@free.fr
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,26 +28,20 @@ package org.analyse.core.util.save;
  * code pour sauvegarder et/ou charger des données depuis un fichier externe de
  * type binaire ou texte selon les filtres.
  */
-public abstract class AnalyseFilter
-{
+public abstract class AnalyseFilter {
     protected String ID;
 
     protected String extention;
 
     /**
      * Créer un nouveau <code>AnalyseFilter</code>.
-     * 
-     * @param name
-     *            identifiant du Filtre.
-     * @param extention
-     *            extention associée au filtre.
-     * @param load
-     *            indique si le filtre prend en charge les chargements.
-     * @param save
-     *            indique si le filtre prend en charge les sauvegarde.
+     *
+     * @param name      identifiant du Filtre.
+     * @param extention extention associée au filtre.
+     * @param load      indique si le filtre prend en charge les chargements.
+     * @param save      indique si le filtre prend en charge les sauvegarde.
      */
-    public AnalyseFilter(String ID, String extention)
-    {
+    public AnalyseFilter(String ID, String extention) {
         this.ID = ID;
         this.extention = extention;
     }
@@ -55,8 +49,7 @@ public abstract class AnalyseFilter
     /**
      * Retourne l'extention associée au filtre.
      */
-    public String getExtension()
-    {
+    public String getExtension() {
         return extention;
     }
 
@@ -68,18 +61,15 @@ public abstract class AnalyseFilter
     /**
      * Retourne l'identifiant du filtre.
      */
-    public String getID()
-    {
+    public String getID() {
         return ID;
     }
 
-    public boolean canSave()
-    {
+    public boolean canSave() {
         return this instanceof Save;
     }
 
-    public boolean canOpen()
-    {
+    public boolean canOpen() {
         return this instanceof Open;
     }
 }

@@ -3,9 +3,8 @@ package org.analyse.core.gui.frame;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Objects;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
 public class FrameObserverTest {
 
     private FrameObserver observer;
@@ -62,17 +61,17 @@ public class FrameObserverTest {
 
         public String title;
 
-        public TestListener(){
+        public TestListener() {
             title = "test";
         }
 
-        public TestListener(String title ) {
-            this.title = title ;
+        public TestListener(String title) {
+            this.title = title;
         }
 
         @Override
         public void updateTitle(String title) {
-            this.title = title ;
+            this.title = title;
         }
     }
 }

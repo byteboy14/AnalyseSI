@@ -1,10 +1,10 @@
 /*
  * 02/05/2004 - 00:03:04
  *
- * FiltreMeriseASI.java - 
+ * FiltreMeriseASI.java -
  * Copyright (C) 2004 Dreux Loic
  * dreuxl@free.fr
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,10 +23,6 @@
 
 package org.analyse.merise.save;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Iterator;
-
 import org.analyse.core.gui.zgraph.ZElement;
 import org.analyse.core.gui.zgraph.ZLien;
 import org.analyse.core.modules.SaveModule;
@@ -40,25 +36,26 @@ import org.analyse.merise.mcd.composant.MCDLien;
 import org.analyse.merise.mcd.composant.MCDObjet;
 import org.analyse.merise.save.asi.ASIMeriseHandler;
 
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Iterator;
+
 /**
  * Filtre enregistrant la partie Merise en XML.
  */
-public class FiltreMeriseASI extends FilterASIModule implements SaveModule
-{
+public class FiltreMeriseASI extends FilterASIModule implements SaveModule {
     private DictionnaireTable dico;
 
     private MCDComponent mcd;
 
-    public FiltreMeriseASI(MeriseModule module)
-    {
+    public FiltreMeriseASI(MeriseModule module) {
         super("ASI", module, new ASIMeriseHandler(module));
     }
 
     /**
      * Implémentation de la class SaveModule.
      */
-    public void save(PrintStream out) throws IOException
-    {
+    public void save(PrintStream out) throws IOException {
         dico = ((MeriseModule) module).getDictionnaireTable();
         mcd = ((MeriseModule) module).getMCDComponent();
 
@@ -69,8 +66,7 @@ public class FiltreMeriseASI extends FilterASIModule implements SaveModule
     /**
      * Sauvegarde du dictionnaire.
      */
-    private void saveDictionnaire(PrintStream out) throws IOException
-    {
+    private void saveDictionnaire(PrintStream out) throws IOException {
         out.println("<dictionnaire>");
 
         for (int i = 0; i < dico.getRowCount() - 1; i++) {
@@ -84,8 +80,8 @@ public class FiltreMeriseASI extends FilterASIModule implements SaveModule
                     + dico.getValue(dico.getID(i), DictionnaireTable.SIZE)
                     + "\" utilise=\""
                     + (((Boolean) dico.getValue(dico.getID(i),
-                            DictionnaireTable.USE)).booleanValue() ? "true"
-                            : "false") + "\" />");
+                    DictionnaireTable.USE)).booleanValue() ? "true"
+                    : "false") + "\" />");
         }
 
         out.println("</dictionnaire>");
@@ -94,11 +90,10 @@ public class FiltreMeriseASI extends FilterASIModule implements SaveModule
     /**
      * Sauvegarde du MPD.
      */
-    private void saveMCD(PrintStream out) throws IOException
-    {
+    private void saveMCD(PrintStream out) throws IOException {
         out.println("<mcd>");
 
-        for (Iterator<ZElement> e = mcd.enumElements(); e.hasNext();) {
+        for (Iterator<ZElement> e = mcd.enumElements(); e.hasNext(); ) {
             MCDObjet o = (MCDObjet) e.next();
             if (o instanceof MCDEntite)
                 out.println("<entite nom=\"" + o.getName() + "\" x=\""
@@ -118,12 +113,12 @@ public class FiltreMeriseASI extends FilterASIModule implements SaveModule
                 out.println("</association>");
         }
 
-        for (Iterator<ZLien> e = mcd.enumLiens(); e.hasNext();) {
+        for (Iterator<ZLien> e = mcd.enumLiens(); e.hasNext(); ) {
             MCDLien l = (MCDLien) e.next();
             out.println("<lien cardmin=\"" + l.getCardMin() + "\" cardmax=\""
                     + l.getCardMax() + "\" elem1=\""
-                    + ((MCDObjet) l.getElement( Constantes.MCDENTITE1 )).getName() + "\" elem2=\""
-                    + ((MCDObjet) l.getElement( Constantes.MCDENTITE2 )).getName() + "\" />");
+                    + ((MCDObjet) l.getElement(Constantes.MCDENTITE1)).getName() + "\" elem2=\""
+                    + ((MCDObjet) l.getElement(Constantes.MCDENTITE2)).getName() + "\" />");
         }
 
         out.println("</mcd>");

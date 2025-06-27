@@ -1,27 +1,24 @@
 /*
  * 05/19/2003 - 10:40:44
- * 
+ *
  * MainActionListener.java - Copyright (C) 2003 Dreux Loic dreuxl@free.fr
- * 
- * 
+ *
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 package org.analyse.core.gui.action;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.OpenProjectASICommand;
@@ -33,10 +30,11 @@ import org.analyse.core.modules.UndoInterface;
 import org.analyse.core.util.Constantes;
 import org.analyse.main.Main;
 
-public class MainActionListener implements ActionListener
-{
-    public void actionPerformed(ActionEvent e)
-    {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MainActionListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         AnalysePanel p = Main.analyseFrame.getCurrentPanel();
 
@@ -90,7 +88,7 @@ public class MainActionListener implements ActionListener
             }
         } else if (action.equals(Constantes.NEW)) {
             new CreateASIProjectCommand().execute();
-            
+
         } else if (action.equals(Constantes.OPEN)) {
             new OpenProjectASICommand().execute();
         } else if (action.equals(Constantes.SAVE)) {
@@ -98,9 +96,9 @@ public class MainActionListener implements ActionListener
         } else if (action.equals(Constantes.SAVEAS)) {
             new SaveAsASICommand().execute();
         } else if (action.equals(Constantes.SHOWHIDE_NAVIGATOR)) {
-            Main.analyseFrame.showHideNavigator();          
+            Main.analyseFrame.showHideNavigator();
         } else if (action.equals(Constantes.PARAMETRAGE)) {
-        	Main.parametrageWindow.setVisible(true);       
-        } 
+            Main.parametrageWindow.setVisible(true);
+        }
     }
 }

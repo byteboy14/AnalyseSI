@@ -16,7 +16,7 @@ package com.microstar.xml;
  * <p>
  * If you are using SAX, you should implement the SAX handler interfaces rather
  * than this one.
- * 
+ *
  * @author Copyright (c) 1997, 1998 by Microstar Software Ltd.
  * @author written by David Megginson &lt;dmeggins@microstar.com&gt;
  * @version 1.1
@@ -26,8 +26,7 @@ package com.microstar.xml;
  * @see org.xml.sax.DocumentHandler
  * @see org.xml.sax.ErrorHandler
  */
-public interface XmlHandler
-{
+public interface XmlHandler {
 
     /**
      * Start the document.
@@ -35,9 +34,8 @@ public interface XmlHandler
      * &AElig;lfred will call this method just before it attempts to read the
      * first entity (the root of the document). It is guaranteed that this will
      * be the first method called.
-     * 
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #endDocument
      */
     void startDocument() throws java.lang.Exception;
@@ -47,9 +45,8 @@ public interface XmlHandler
      * <p>
      * &AElig;lfred will call this method once, when it has finished parsing the
      * XML document. It is guaranteed that this will be the last method called.
-     * 
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #startDocument
      */
     void endDocument() throws java.lang.Exception;
@@ -61,14 +58,11 @@ public interface XmlHandler
      * URIs. &AElig;lfred will call this method for the top-level document
      * entity, for external text (XML) entities, and the external DTD subset (if
      * any).
-     * 
-     * @param publicId
-     *            The public identifier, or null if none was supplied.
-     * @param systemId
-     *            The system identifier.
+     *
+     * @param publicId The public identifier, or null if none was supplied.
+     * @param systemId The system identifier.
      * @return The replacement system identifier, or null to use the default.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #startExternalEntity
      * @see #endExternalEntity
      */
@@ -84,11 +78,9 @@ public interface XmlHandler
      * <p>
      * If necessary, you can use this method to track the location of the
      * current entity so that you can resolve relative URIs correctly.
-     * 
-     * @param systemId
-     *            The URI of the external entity that is starting.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param systemId The URI of the external entity that is starting.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #endExternalEntity
      * @see #resolveEntity
      */
@@ -102,11 +94,9 @@ public interface XmlHandler
      * <p>
      * If necessary, you can use this method to track the location of the
      * current entity so that you can resolve relative URIs correctly.
-     * 
-     * @param systemId
-     *            The URI of the external entity that is ending.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param systemId The URI of the external entity that is ending.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #startExternalEntity
      * @see #resolveEntity
      */
@@ -120,15 +110,11 @@ public interface XmlHandler
      * <p>
      * Please note that the public and system identifiers will not always be a
      * reliable indication of the DTD in use.
-     * 
-     * @param name
-     *            The document type name.
-     * @param publicId
-     *            The public identifier, or null if unspecified.
-     * @param systemId
-     *            The system identifier, or null if unspecified.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param name     The document type name.
+     * @param publicId The public identifier, or null if unspecified.
+     * @param systemId The system identifier, or null if unspecified.
+     * @throws java.lang.Exception The handler may throw any exception.
      */
     void doctypeDecl(String name, String publicId, String systemId)
             throws java.lang.Exception;
@@ -142,19 +128,14 @@ public interface XmlHandler
      * <p>
      * You may use XmlParser.getAttributeType() to find the attribute's declared
      * type.
-     * 
-     * @param name
-     *            The name of the attribute.
-     * @param type
-     *            The type of the attribute (see below).
-     * @param value
-     *            The value of the attribute, or null if the attribute is
-     *            <code>#IMPLIED</code>.
-     * @param isSpecified
-     *            True if the value was specified, false if it was defaulted
-     *            from the DTD.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param name        The name of the attribute.
+     * @param type        The type of the attribute (see below).
+     * @param value       The value of the attribute, or null if the attribute is
+     *                    <code>#IMPLIED</code>.
+     * @param isSpecified True if the value was specified, false if it was defaulted
+     *                    from the DTD.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #startElement
      * @see XmlParser#declaredAttributes
      * @see XmlParser#getAttributeType
@@ -169,11 +150,9 @@ public interface XmlHandler
      * &AElig;lfred will call this method at the beginning of each element. By
      * the time this is called, all of the attributes for the element will
      * already have been reported using the <code>attribute</code> method.
-     * 
-     * @param elname
-     *            The element type name.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param elname The element type name.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #attribute
      * @see #endElement
      * @see XmlParser#declaredElements
@@ -186,11 +165,9 @@ public interface XmlHandler
      * <p>
      * &AElig;lfred will call this method at the end of each element (including
      * EMPTY elements).
-     * 
-     * @param elname
-     *            The element type name.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param elname The element type name.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see #startElement
      * @see XmlParser#declaredElements
      * @see XmlParser#getElementContentType
@@ -207,15 +184,11 @@ public interface XmlHandler
      * <p>
      * Do <em>not</em> attempt to read more than <var>length </var> characters
      * from the array, or to read before the <var>start </var> position.
-     * 
-     * @param ch
-     *            The character data.
-     * @param start
-     *            The starting position in the array.
-     * @param length
-     *            The number of characters available.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param ch     The character data.
+     * @param start  The starting position in the array.
+     * @param length The number of characters available.
+     * @throws java.lang.Exception The handler may throw any exception.
      */
     void charData(char ch[], int start, int length)
             throws java.lang.Exception;
@@ -230,15 +203,11 @@ public interface XmlHandler
      * <p>
      * Do <em>not</em> attempt to read more than <var>length </var> characters
      * from the array or to read before the <var>start </var> position.
-     * 
-     * @param ch
-     *            The literal whitespace characters.
-     * @param start
-     *            The starting position in the array.
-     * @param length
-     *            The number of whitespace characters available.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param ch     The literal whitespace characters.
+     * @param start  The starting position in the array.
+     * @param length The number of whitespace characters available.
+     * @throws java.lang.Exception The handler may throw any exception.
      */
     void ignorableWhitespace(char ch[], int start, int length)
             throws java.lang.Exception;
@@ -249,13 +218,10 @@ public interface XmlHandler
      * &AElig;lfred will call this method once for each processing instruction.
      * Note that processing instructions may appear outside of the top-level
      * element. The
-     * 
-     * @param target
-     *            The target (the name at the start of the PI).
-     * @param data
-     *            The data, if any (the rest of the PI).
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param target The target (the name at the start of the PI).
+     * @param data   The data, if any (the rest of the PI).
+     * @throws java.lang.Exception The handler may throw any exception.
      */
     void processingInstruction(String target, String data)
             throws java.lang.Exception;
@@ -272,17 +238,12 @@ public interface XmlHandler
      * Note that you can use the <code>XmlException</code> class to
      * encapsulate all of the information provided, though the use of the class
      * is not mandatory.
-     * 
-     * @param message
-     *            The error message.
-     * @param systemId
-     *            The system identifier of the entity that contains the error.
-     * @param line
-     *            The approximate line number of the error.
-     * @param column
-     *            The approximate column number of the error.
-     * @exception java.lang.Exception
-     *                The handler may throw any exception.
+     *
+     * @param message  The error message.
+     * @param systemId The system identifier of the entity that contains the error.
+     * @param line     The approximate line number of the error.
+     * @param column   The approximate column number of the error.
+     * @throws java.lang.Exception The handler may throw any exception.
      * @see XmlException
      */
     void error(String message, String systemId, int line, int column)

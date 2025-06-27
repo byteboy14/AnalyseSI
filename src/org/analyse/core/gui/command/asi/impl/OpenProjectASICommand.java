@@ -6,8 +6,8 @@ public class OpenProjectASICommand extends ASICommand {
 
     private final String filename;
 
-    public OpenProjectASICommand(){
-        filename = null ;
+    public OpenProjectASICommand() {
+        filename = null;
     }
 
     public OpenProjectASICommand(String arg) {

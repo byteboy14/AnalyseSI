@@ -5,7 +5,7 @@
  * Copyright (C) 2002 Dreux Loic
  * dreuxl@free.fr
  *
- *  Modifications 
+ *  Modifications
  *  -------------
  *  Date : 2009 mars 13
  *  @auteur : Benjamin Gandon
@@ -28,61 +28,64 @@
 
 package org.analyse.core.gui.zgraph;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Observable;
 
 /**
  * Cet objet est destiné à être utilise avec ZGraphique.
  */
-public abstract class ZElement
-{
-    /** Position en X */
+public abstract class ZElement {
+    /**
+     * Position en X
+     */
     private int x;
 
-    /** Position en Y */
+    /**
+     * Position en Y
+     */
     private int y;
 
-    /** largeur */
+    /**
+     * largeur
+     */
     private int width;
 
-    /** hauteur */
+    /**
+     * hauteur
+     */
     private int height;
 
-    /** ZGraphique */
+    /**
+     * ZGraphique
+     */
     protected ObservableZGraphique observable;
 
-    /** Changement d'un lien */
+    /**
+     * Changement d'un lien
+     */
     private boolean lien;
 
-    public ZElement()
-    {
+    public ZElement() {
         observable = new ObservableZGraphique();
     }
 
-    /** Définie un <code>ZElement</code> avec les paramètres par défaut */
-    public ZElement(ZGraphique zgraph)
-    {
+    /**
+     * Définie un <code>ZElement</code> avec les paramètres par défaut
+     */
+    public ZElement(ZGraphique zgraph) {
         this(zgraph, 0, 0, 10, 10);
     }
 
     /**
      * Définie un <code>ZElement</code> en le positionnant.
-     * 
-     * @param x
-     *            position en x de l'élément à l'initialisation.
-     * @param y
-     *            position en y de l'élément à l'initialisation.
-     * @param width
-     *            largeur de l'élément.
-     * @param height
-     *            hauteur de l'élément.
+     *
+     * @param x      position en x de l'élément à l'initialisation.
+     * @param y      position en y de l'élément à l'initialisation.
+     * @param width  largeur de l'élément.
+     * @param height hauteur de l'élément.
      */
-    public ZElement(ZGraphique zgraph, int x, int y, int width, int height)
-    {
+    public ZElement(ZGraphique zgraph, int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -91,62 +94,67 @@ public abstract class ZElement
         majObserver(zgraph);
     }
 
-    /** Modifie la position de l'élément */
-    public void setPosition(Point p)
-    {
+    /**
+     * Modifie la position de l'élément
+     */
+    public void setPosition(Point p) {
         this.x = (int) p.getX();
         this.y = (int) p.getY();
         observable.notifyZElement();
     }
 
-    /** Modifie la largeur de l'élément */
-    public void setWidth(int width)
-    {
+    /**
+     * Modifie la largeur de l'élément
+     */
+    public void setWidth(int width) {
         this.width = width;
         observable.notifyZElement();
     }
 
-    /** Modifie la hauteur de l'élément */
-    public void setHeight(int height)
-    {
+    /**
+     * Modifie la hauteur de l'élément
+     */
+    public void setHeight(int height) {
         this.height = height;
         observable.notifyZElement();
     }
 
-    /** Retourne la position en x de l'élément */
-    public int getX()
-    {
+    /**
+     * Retourne la position en x de l'élément
+     */
+    public int getX() {
         return x;
     }
 
-    /** Retourne la position en y de l'élément */
-    public int getY()
-    {
+    /**
+     * Retourne la position en y de l'élément
+     */
+    public int getY() {
         return y;
     }
 
-    /** Retourne la largeur de l'élément */
-    public int getWidth()
-    {
+    /**
+     * Retourne la largeur de l'élément
+     */
+    public int getWidth() {
         return width;
     }
 
-    /** Retourne la hauteur de l'élément */
-    public int getHeight()
-    {
+    /**
+     * Retourne la hauteur de l'élément
+     */
+    public int getHeight() {
         return height;
     }
 
-    public boolean isSelected(int x, int y)
-    {
+    public boolean isSelected(int x, int y) {
         return x > getX()
-            && x < getX() + getWidth()
-            && y > getY()
-            && y < getY() + getHeight();
+                && x < getX() + getWidth()
+                && y > getY()
+                && y < getY() + getHeight();
     }
 
-    public boolean isInside(int x1, int y1, int x2, int y2)
-    {
+    public boolean isInside(int x1, int y1, int x2, int y2) {
         int tmp = x1;
         if (x2 < x1) {
             x1 = x2;
@@ -158,32 +166,28 @@ public abstract class ZElement
             y2 = tmp;
         }
         return (x1 < x && x < x2) && (y1 < y && y < y2)
-            && (x1 < x+width && x+width < x2) && (y1 < y+height && y+height < y2);
+                && (x1 < x + width && x + width < x2) && (y1 < y + height && y + height < y2);
     }
 
-    public boolean getLien()
-    {
+    public boolean getLien() {
         return lien;
     }
 
-    public void setLien(boolean lien)
-    {
+    public void setLien(boolean lien) {
         this.lien = lien;
     }
 
     /**
      * Redessine le composant dans un <code>ZGraphique</code>
-     * 
-     * @param g
-     *            Graphics du <code>ZGraphique</code>
+     *
+     * @param g Graphics du <code>ZGraphique</code>
      */
     public abstract void paint(Graphics g);
 
     /**
      * Dessine le focus du composant s'il est séléctionné
      */
-    public void paintFocus(Graphics g)
-    {
+    public void paintFocus(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         Rectangle2D r;
 
@@ -206,50 +210,41 @@ public abstract class ZElement
 
     }
 
-    public void majObserver(ZGraphique zgraph)
-    {
+    public void majObserver(ZGraphique zgraph) {
         observable.addObserver(zgraph);
     }
 
-    public void clearObservers()
-    {
+    public void clearObservers() {
         observable.deleteObservers();
     }
 
-    public void notifyZElement()
-    {
+    public void notifyZElement() {
         observable.notifyZElement();
     }
 
-    public void changementLien()
-    {
+    public void changementLien() {
         lien = true;
     }
 
     public abstract boolean isChanged();
 
-    public String toString()
-    {
+    public String toString() {
         return "ZElement, " + info();
     }
 
-    public String info()
-    {
+    public String info() {
         return "position(" + x + ";" + y + ") taille(" + width + ";" + height
                 + ")";
     }
 
-    private class ObservableZGraphique extends Observable
-    {
+    private class ObservableZGraphique extends Observable {
         private int x, y, height, width;
 
-        public ObservableZGraphique()
-        {
+        public ObservableZGraphique() {
             x = y = height = width = 0;
         }
 
-        public void notifyZElement()
-        {
+        public void notifyZElement() {
             if (x != getX() || y != getY() || height != getHeight()
                     || width != getWidth() || getLien() || isChanged()) {
                 setChanged();

@@ -20,33 +20,6 @@
 
 package org.analyse.merise.gui.panel;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.StringTokenizer;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
 import org.analyse.core.gui.action.BasicAction;
 import org.analyse.core.gui.menu.ClipboardPopupMenu;
 import org.analyse.core.gui.shortcuts.ASIKeyHandler;
@@ -55,11 +28,21 @@ import org.analyse.core.modules.ClipboardInterface;
 import org.analyse.core.util.Constantes;
 import org.analyse.core.util.GUIUtilities;
 import org.analyse.core.util.Utilities;
-import org.analyse.core.util.save.AnalyseSave;
 import org.analyse.core.util.save.FileChooserFilter;
 import org.analyse.main.Main;
 import org.analyse.merise.gui.dialog.ConnectionDialog;
 import org.analyse.merise.mcd.composant.MLDCommand;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.*;
 
 public class MLDPanel extends AnalysePanel implements Observer, ClipboardInterface {
     private ActionHandler actionHandler;

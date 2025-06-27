@@ -9,44 +9,44 @@ public class NavigatorButtonObserverTest {
     private NavigatorButtonObserverForTest obs;
 
     @Before
-    public void setup(){
+    public void setup() {
         obs = new NavigatorButtonObserverForTest();
     }
 
     @Test
-    public void addListener_addOne(){
+    public void addListener_addOne() {
         TestListener one = new TestListener();
         Assert.assertEquals(0, obs.getListeners());
 
         obs.addListener(one);
 
-        Assert.assertEquals(1 , obs.getListeners());
+        Assert.assertEquals(1, obs.getListeners());
     }
 
     @Test
-    public void addListener_addThree(){
+    public void addListener_addThree() {
         TestListener one = new TestListener();
         Assert.assertEquals(0, obs.getListeners());
 
         obs.addListener(one);
 
-        Assert.assertEquals(1 , obs.getListeners());
+        Assert.assertEquals(1, obs.getListeners());
 
         TestListener two = new TestListener();
 
         obs.addListener(two);
 
-        Assert.assertEquals(2 , obs.getListeners());
+        Assert.assertEquals(2, obs.getListeners());
 
         TestListener three = new TestListener();
 
         obs.addListener(three);
 
-        Assert.assertEquals(3 , obs.getListeners());
+        Assert.assertEquals(3, obs.getListeners());
     }
 
     @Test
-    public void notifyOnNavigateTo_One(){
+    public void notifyOnNavigateTo_One() {
         TestListener one = new TestListener("1");
         obs.addListener(one);
 
@@ -60,7 +60,7 @@ public class NavigatorButtonObserverTest {
     }
 
     @Test
-    public void notifyOnNavigateTo_Many(){
+    public void notifyOnNavigateTo_Many() {
         TestListener one = new TestListener("1");
         obs.addListener(one);
         TestListener two = new TestListener("2");
@@ -88,15 +88,15 @@ public class NavigatorButtonObserverTest {
 
     private class TestListener implements NavigatorButtonListener {
 
-        private boolean isNotified = false ;
+        private boolean isNotified = false;
         private String actionName = "";
 
         public TestListener() {
-            this.actionName = "" ;
+            this.actionName = "";
         }
 
-        public TestListener(String name ) {
-            this.actionName = name ;
+        public TestListener(String name) {
+            this.actionName = name;
         }
 
         public boolean isNotified() {

@@ -1,18 +1,18 @@
 /*
  * 10/17/2003 - 13:44:37
- * 
+ *
  * MPDPanel.java - Copyright (C) 2003 Dreux Loic dreuxl@free.fr
- * 
- * 
+ *
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -20,11 +20,20 @@
 
 package org.analyse.merise.gui.panel;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import com.sun.imageio.plugins.png.PNGImageWriter;
+import org.analyse.core.gui.action.BasicAction;
+import org.analyse.core.modules.AnalysePanel;
+import org.analyse.core.util.Constantes;
+import org.analyse.core.util.GUIUtilities;
+import org.analyse.core.util.Utilities;
+import org.analyse.core.util.save.AnalyseFilter;
+import org.analyse.core.util.save.FileChooserFilter;
+import org.analyse.main.Main;
+import org.analyse.merise.mcd.composant.MPDComponent;
+
+import javax.imageio.stream.FileImageOutputStream;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,29 +43,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.stream.FileImageOutputStream;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-
-import org.analyse.core.gui.action.BasicAction;
-import org.analyse.core.modules.AnalysePanel;
-import org.analyse.core.util.GUIUtilities;
-import org.analyse.core.util.Utilities;
-import org.analyse.core.util.Constantes;
-import org.analyse.core.util.save.AnalyseFilter;
-import org.analyse.core.util.save.FileChooserFilter;
-import org.analyse.main.Main;
-import org.analyse.merise.mcd.composant.MPDComponent;
-
-import com.sun.imageio.plugins.png.PNGImageWriter;
-
-public class MPDPanel extends AnalysePanel
-{
+public class MPDPanel extends AnalysePanel {
     private MPDComponent mpdComponent;
 
     private JFileChooser chooser;
@@ -69,10 +56,9 @@ public class MPDPanel extends AnalysePanel
 
     private JPanel toolbar;
 
-    public MPDPanel(MPDComponent mpdComponent)
-    {
+    public MPDPanel(MPDComponent mpdComponent) {
         super("MPD");
-        
+
         this.mpdComponent = mpdComponent;
         this.actionHandler = new ActionHandler();
 
@@ -102,8 +88,7 @@ public class MPDPanel extends AnalysePanel
         this.add(BorderLayout.NORTH, toolbar);
     }
 
-    private void initToolbar()
-    {
+    private void initToolbar() {
         toolbar = new JPanel();
         toolbar.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -114,8 +99,7 @@ public class MPDPanel extends AnalysePanel
         });
     }
 
-    private void initPopup()
-    {
+    private void initPopup() {
         popupSaveGraphic = new JPopupMenu();
         popupSaveGraphic.add(new JMenuItem(saveGraphic) {
             {
@@ -124,36 +108,30 @@ public class MPDPanel extends AnalysePanel
         });
     }
 
-    private void initAction()
-    {
+    private void initAction() {
         saveGraphic = new BasicAction(null,
                 Utilities.getLangueMessage(Constantes.MESSAGE_SAUVEGARDER_FICHIER_PNG), "SAVE_GRAPH",
                 GUIUtilities.getImageIcon(Constantes.FILE_PNG_SAVE), 0, null);
         saveGraphic.addActionListener(actionHandler);
     }
 
-    public boolean undoEnabled()
-    {
+    public boolean undoEnabled() {
         return false;
     }
 
-    public boolean redoEnabled()
-    {
+    public boolean redoEnabled() {
         return false;
     }
 
-    public boolean copyEnabled()
-    {
+    public boolean copyEnabled() {
         return false;
     }
 
-    public boolean pasteEnabled()
-    {
+    public boolean pasteEnabled() {
         return false;
     }
 
-    private String chooseFile()
-    {
+    private String chooseFile() {
         if (chooser.showDialog(org.analyse.main.Main.analyseFrame, null) == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getAbsolutePath();
         }
@@ -161,10 +139,8 @@ public class MPDPanel extends AnalysePanel
         return null;
     }
 
-    private class ActionHandler implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
+    private class ActionHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
             String action = e.getActionCommand();
             if (action.equals("SAVE_GRAPH")) {
                 String fileName = chooseFile();
@@ -217,10 +193,8 @@ public class MPDPanel extends AnalysePanel
         }
     }
 
-    private class MouseHandler extends MouseAdapter
-    {
-        public void mouseReleased(MouseEvent e)
-        {
+    private class MouseHandler extends MouseAdapter {
+        public void mouseReleased(MouseEvent e) {
             //if (e.isPopupTrigger()) Ne marche pas avec le JDK d'IBM
             if (e.getButton() == MouseEvent.BUTTON3) {
                 popupSaveGraphic.show(e.getComponent(), e.getX(), e.getY());

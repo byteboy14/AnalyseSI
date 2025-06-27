@@ -1,10 +1,10 @@
 /*
  * 03/01/2004 - 12:27:08
  *
- * SQLCommand.java - 
+ * SQLCommand.java -
  * Copyright (C) 2004 Dreux Loic
  * dreuxl@free.fr
- * 
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,82 +23,78 @@
 
 package org.analyse.merise.mcd.composant;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 
 public class MLDCommand {
-	
-	private int state;
-	private String error;
-	private int errorCode;
-	private ObservableMDL observableMDL;
-	private List<String> requests;
 
-	public MLDCommand() {
-		observableMDL = new ObservableMDL();
-		requests = new ArrayList<String>();	
-	}
+    private int state;
+    private String error;
+    private int errorCode;
+    private ObservableMDL observableMDL;
+    private List<String> requests;
 
-	/**
-	 * Ajoute un observer qui permet d'avertir les autres classes d'un ajout ou
-	 * d'une suppression d'une requête.
-	 */
-	public void addObserver(Observer obs) {
-		observableMDL.addObserver(obs);
-	}
+    public MLDCommand() {
+        observableMDL = new ObservableMDL();
+        requests = new ArrayList<String>();
+    }
 
-	private class ObservableMDL extends Observable {
-		public void notifyObservers() {
-			setChanged();
-			super.notifyObservers();
-		}
-	}
-	
-	/**
-	 * Supprime toutes les requetes.
-	 */
-	public void clear() {
-		requests.clear();
-		observableMDL.notifyObservers();
-	}
+    /**
+     * Ajoute un observer qui permet d'avertir les autres classes d'un ajout ou
+     * d'une suppression d'une requête.
+     */
+    public void addObserver(Observer obs) {
+        observableMDL.addObserver(obs);
+    }
 
-	public String getRequests() {
-		String res = "";
-		for (Iterator<String> e = requests.iterator(); e.hasNext();) {
-			res += e.next();
-		}
-		return res;
-	}
+    private class ObservableMDL extends Observable {
+        public void notifyObservers() {
+            setChanged();
+            super.notifyObservers();
+        }
+    }
 
-	public void addRequest(String request) {
-		requests.add(request);
-		observableMDL.notifyObservers();
-	}
+    /**
+     * Supprime toutes les requetes.
+     */
+    public void clear() {
+        requests.clear();
+        observableMDL.notifyObservers();
+    }
 
-	/**
-	 * Permet de récupérer l'erreur lors de la connection ou de l'éxécution des requetes SQL.
-	 */
-	public String getError() {
-		return error;
-	}
+    public String getRequests() {
+        String res = "";
+        for (Iterator<String> e = requests.iterator(); e.hasNext(); ) {
+            res += e.next();
+        }
+        return res;
+    }
 
-	/**
-	 * Permet de récupérer le code d'erreur.
-	 */
-	public int getErrorCode() {
-		return errorCode;
-	}
+    public void addRequest(String request) {
+        requests.add(request);
+        observableMDL.notifyObservers();
+    }
+
+    /**
+     * Permet de récupérer l'erreur lors de la connection ou de l'éxécution des requetes SQL.
+     */
+    public String getError() {
+        return error;
+    }
+
+    /**
+     * Permet de récupérer le code d'erreur.
+     */
+    public int getErrorCode() {
+        return errorCode;
+    }
 
 
-	/**
-	 * Retourne l'état de la connection.
-	 */
-	public int getState() {
-		return state;
-	}
- 
+    /**
+     * Retourne l'état de la connection.
+     */
+    public int getState() {
+        return state;
+    }
+
 }

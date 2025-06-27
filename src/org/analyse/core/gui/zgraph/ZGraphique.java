@@ -5,12 +5,12 @@
  * Copyright (C) 2002 Dreux Loic
  * dreuxl@free.fr
  *
- *  Modifications 
+ *  Modifications
  *  -------------
  *  Date : 2009 janvier 22
  *  @auteur : Bruno Dabo <bruno.dabo@lywoonsoftware.com>
  *  @objet : enlever les limites sur les vecteurs
- *  
+ *
  *  Date : 2009 mars 13
  *  @auteur : Benjamin Gandon
  *  @objet : ajouter la sélection multiple
@@ -32,54 +32,39 @@
 
 package org.analyse.core.gui.zgraph;
 
-import java.awt.AWTEvent;
-import java.awt.AWTEventMulticaster;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import org.analyse.core.util.Constantes;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
-
-import javax.swing.JComponent;
-
-import org.analyse.core.util.Constantes;
+import java.util.*;
 
 /**
  * ZGraphique est un composant permettant d'afficher des éléments graphiques, de
  * les déplacer, de les lier. <br>
  * <br>
  * Il est conseiller d'utiliser ce composant dans un <code>JScrollPane<code>.
- * 
- *<pre>
+ *
+ * <pre>
  * Container c = getContentPane();
  * c.setLayout(new BorderLayout());
  * c.add(BorderLayout.CENTER, new JScrollPane(new ZGraphique()));
  * </pre>
  */
 public class ZGraphique extends JComponent implements MouseListener,
-        MouseMotionListener, Observer
-{
-    /** Vecteur de <code>ZElement</code> */
-    private List<ZElement> zelements = new ArrayList<ZElement>() ;
+        MouseMotionListener, Observer {
+    /**
+     * Vecteur de <code>ZElement</code>
+     */
+    private List<ZElement> zelements = new ArrayList<ZElement>();
 
-    /** Vecteur de <code>ZLien</code> */
-    private List<ZLien> zliens = new ArrayList<ZLien>() ;
+    /**
+     * Vecteur de <code>ZLien</code>
+     */
+    private List<ZLien> zliens = new ArrayList<ZLien>();
 
     /**
      * Cette variable sert pour le glisser-déposer. Lorsque l'on clic sur un
@@ -114,96 +99,99 @@ public class ZGraphique extends JComponent implements MouseListener,
      */
     private ZLien lienTemp;
 
-    /** Utilisé pour le déplacement des éléments. Contient la position relative par rapport à la souris. */
+    /**
+     * Utilisé pour le déplacement des éléments. Contient la position relative par rapport à la souris.
+     */
     private Map<ZElement, Point> positionsRelatives = new HashMap<ZElement, Point>();
 
-    /** Possibilité d'intéragir sur le composant grâce à la souris. */
+    /**
+     * Possibilité d'intéragir sur le composant grâce à la souris.
+     */
     private boolean enabled = true;
 
-    /** Enclenche le mode 'création de lien' */
+    /**
+     * Enclenche le mode 'création de lien'
+     */
     private boolean creationLien = false;
 
-    /** Indique si en mode 'création de lien', l'utilisateur a cliqué */
+    /**
+     * Indique si en mode 'création de lien', l'utilisateur a cliqué
+     */
     private boolean creationLienClic = false;
 
-    /** Gestion des événement */
+    /**
+     * Gestion des événement
+     */
     private ActionListener actionListener;
 
-    /** Pour la position du lien */
+    /**
+     * Pour la position du lien
+     */
     private int x1, y1, x2, y2;
 
     /**
      * Définie un <code>ZGraphique</code> avec les paramètres par défaut.
      */
-    public ZGraphique()
-    {
-    	setEnabled(false);
-    	addMouseListener(this);	
+    public ZGraphique() {
+        setEnabled(false);
+        addMouseListener(this);
         setSize(getPreferredSize());
         setBackground(Color.white);
     }
-	
+
     /**
      * Active ou désactive l'intéraction de l'utilisateur avec le graphique.
      */
-    public void setEnabled(boolean enabled)
-    {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-	/**
+    /**
      * Retourne la variable enabled.
      */
-    public boolean getEnabled()
-    {
+    public boolean getEnabled() {
         return enabled;
     }
 
     /**
      * Retourne le nombre de <code>ZElement</code>.
      */
-    public int sizeElements()
-    {
+    public int sizeElements() {
         return zelements.size();
     }
 
     /**
      * Retourne le nombre de <code>ZElement</code> actuellement sélectionnés.
      */
-    public int sizeSelection()
-    {
+    public int sizeSelection() {
         return selectionCourante.size();
     }
 
     /**
      * Retourne le nombre de liens.
      */
-    public int sizeLien()
-    {
+    public int sizeLien() {
         return zliens.size();
     }
 
     /**
      * Retourne une Enumeration des <code>ZElement</code>.
      */
-    public Iterator<ZElement> enumElements()
-    {
+    public Iterator<ZElement> enumElements() {
         return zelements.iterator();
     }
 
     /**
      * Retourne une énumération des <code>ZLien</code>
      */
-    public Iterator<ZLien> enumLiens()
-    {
+    public Iterator<ZLien> enumLiens() {
         return zliens.iterator();
     }
 
     /**
      * Ajoute un <code>ZElement</code> dans le composant.
      */
-    public void addElement(ZElement element)
-    {
+    public void addElement(ZElement element) {
         zelements.add(element);
         element.majObserver(this);
         repaint();
@@ -212,8 +200,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Ajoute plusieurs <code>ZElement</code> dans le composant.
      */
-    public void addElements(List<ZElement> elements)
-    {
+    public void addElements(List<ZElement> elements) {
         Iterator<ZElement> e = elements.iterator();
         while (e.hasNext())
             addElement(e.next());
@@ -222,8 +209,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Supprime un <code>ZElement</code> du composant.
      */
-    public void removeElement(ZElement element)
-    {
+    public void removeElement(ZElement element) {
         enleverFocus();
 
         Iterator<ZLien> e = zliens.iterator();
@@ -242,12 +228,12 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Ajoute un <code>ZLien</code> dans le composant.
      */
-    public void addLien(ZLien lien)  {
-    	
-        if (lien.getElement(Constantes.MCDENTITE1) != null && lien.getElement(Constantes.MCDENTITE2) != null 
-        		&& lien.getElement(Constantes.MCDENTITE1) != lien.getElement(Constantes.MCDENTITE2)
+    public void addLien(ZLien lien) {
+
+        if (lien.getElement(Constantes.MCDENTITE1) != null && lien.getElement(Constantes.MCDENTITE2) != null
+                && lien.getElement(Constantes.MCDENTITE1) != lien.getElement(Constantes.MCDENTITE2)
                 && !zliens.contains(lien))
-    	
+
             zliens.add(lien);
         repaint();
     }
@@ -255,8 +241,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Ajoute plusieurs <code>ZLien</code> dans le composant.
      */
-    public void addLiens(List<ZLien> liens)
-    {
+    public void addLiens(List<ZLien> liens) {
         Iterator<ZLien> e = liens.iterator();
         while (e.hasNext())
             addLien(e.next());
@@ -265,8 +250,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Supprime un <code>ZLien</code> du composant.
      */
-    public void removeLien(ZLien lien)
-    {
+    public void removeLien(ZLien lien) {
         enleverFocus();
         zliens.remove(lien);
         repaint();
@@ -275,91 +259,81 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Supprime plusieurs <code>ZLien</code> du composant.
      */
-    public void removeLiens(List<ZLien> supp)
-    {
-        for (Iterator<ZLien> e = supp.iterator(); e.hasNext();)
+    public void removeLiens(List<ZLien> supp) {
+        for (Iterator<ZLien> e = supp.iterator(); e.hasNext(); )
             removeLien(e.next());
     }
 
     /**
      * Retourne un <code>ZLien</code> du composant.
-     * 
-     * @param i
-     *            index du lien à retourner
+     *
+     * @param i index du lien à retourner
      */
-    public ZLien getLien(int i)
-    {
+    public ZLien getLien(int i) {
         return zliens.get(i);
     }
 
     /**
      * Retourne le lien qui a le focus.
      */
-    public ZLien getLienFocus()
-    {
+    public ZLien getLienFocus() {
         return lienClic;
     }
 
     /**
      * Retourne une Enumeration des <code>ZLien</code>.
      */
-    public Iterator<ZLien> elementsZLiens()
-    {
+    public Iterator<ZLien> elementsZLiens() {
         return zliens.iterator();
     }
 
     /**
      * Retourne un <code>ZElement</code> du composant.
-     * 
-     * @param i
-     *            index du composant à retourner
+     *
+     * @param i index du composant à retourner
      */
-    public ZElement getElement(int i)
-    {
+    public ZElement getElement(int i) {
         return zelements.get(i);
     }
 
     /**
      * Retourne le composant qui a le focus.
      */
-    public ZElement getElementFocus()
-    {
+    public ZElement getElementFocus() {
         return elementClic;
     }
 
     /**
      * Retourne une Enumeration des <code>ZElement</code>.
      */
-    public Iterator<ZElement> elementsZElements()
-    {
+    public Iterator<ZElement> elementsZElements() {
         return zelements.iterator();
     }
 
     /**
      * Retourne le premier {@link ZElement} se trouvant à la position x, y.
      */
-    public ZElement chercheElement(int x, int y)
-    {
+    public ZElement chercheElement(int x, int y) {
         for (int i = zelements.size() - 1; i >= 0; i--)
             if (getElement(i).isSelected(x, y))
                 return getElement(i);
         return null;
     }
+
     /**
      * Retourne le premier {@link ZLien} se trouvant à la position x, y.
      */
-    public ZLien chercheLien(int x, int y)
-    {
+    public ZLien chercheLien(int x, int y) {
         for (int i = 0; i < zliens.size(); i++)
             if (getLien(i).isSelected(x, y))
                 return getLien(i);
         return null;
     }
+
     /**
      * Retourne le premier composant se trouvant à la position x, y.
      */
-    public Object getObjectFromLocation(int x, int y)
-    {
+    public Object getObjectFromLocation(int x, int y) {
         ZElement elem = chercheElement(x, y);
         if (elem != null)
             return elem;
@@ -373,8 +347,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Enlève le focus de tous les elements.
      */
-    public void enleverFocus()
-    {
+    public void enleverFocus() {
         elementClic = null;
         selectionCourante.clear();
         selectionTemporaire.clear();
@@ -385,8 +358,7 @@ public class ZGraphique extends JComponent implements MouseListener,
      * Enclenche le mode de "création de liens". Il est alors possible de liée
      * deux elements dans le graphe.
      */
-    public void creerLien(ZLien lien)
-    {
+    public void creerLien(ZLien lien) {
         enleverFocus();
         lienTemp = lien;
         lienTemp.setElement(null, Constantes.MCDENTITE1);
@@ -400,8 +372,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Désenclenche le mode "création de liens".
      */
-    public void annulerCreerLien()
-    {
+    public void annulerCreerLien() {
         enleverFocus();
 
         lienTemp = null;
@@ -412,8 +383,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Cette méthode indique si l'on peut créer un lien entre deux éléments.
      */
-    public boolean peutCreerLien(ZElement elem1, ZElement elem2)
-    {
+    public boolean peutCreerLien(ZElement elem1, ZElement elem2) {
         ZLien lien;
 
         Iterator<ZLien> e = zliens.iterator();
@@ -427,18 +397,16 @@ public class ZGraphique extends JComponent implements MouseListener,
         return true;
     }
 
-    public String infoZLiens()
-    {
+    public String infoZLiens() {
         String s = "{";
-        for (Iterator<ZLien> e = elementsZLiens(); e.hasNext();) {
+        for (Iterator<ZLien> e = elementsZLiens(); e.hasNext(); ) {
             ZLien lien = e.next();
             s += "\n" + lien;
         }
         return s + "\n}";
     }
 
-    public void clearAll()
-    {
+    public void clearAll() {
         enleverFocus();
         zelements = new ArrayList<ZElement>();
         zliens = new ArrayList<ZLien>();
@@ -448,8 +416,7 @@ public class ZGraphique extends JComponent implements MouseListener,
     /**
      * Dessine le composant.
      */
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         g.setColor(getBackground());
@@ -458,7 +425,7 @@ public class ZGraphique extends JComponent implements MouseListener,
         Iterator<ZElement> e = zelements.iterator();
         while (e.hasNext())
             e.next().paint(g);
-        
+
         Iterator<ZLien> e1 = zliens.iterator();
         while (e1.hasNext())
             e1.next().paint(g);
@@ -471,10 +438,10 @@ public class ZGraphique extends JComponent implements MouseListener,
             lienClic.paintFocus(g);
 
         if (departCadreSelection != null) {
-            int x1 = (int)departCadreSelection.getX();
-            int y1 = (int)departCadreSelection.getY();
-            int x2 = (int)arriveeCadreSelection.getX();
-            int y2 = (int)arriveeCadreSelection.getY();
+            int x1 = (int) departCadreSelection.getX();
+            int y1 = (int) departCadreSelection.getY();
+            int x2 = (int) arriveeCadreSelection.getX();
+            int y2 = (int) arriveeCadreSelection.getY();
             int w = x2 - x1;
             int h = y2 - y1;
             if (x2 < x1) {
@@ -506,8 +473,7 @@ public class ZGraphique extends JComponent implements MouseListener,
         }
     }
 
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         int x = 0, y = 0;
         for (int i = 0; i < zelements.size(); i++) {
             x = getElement(i).getX() + getElement(i).getWidth() > x ? getElement(
@@ -522,32 +488,27 @@ public class ZGraphique extends JComponent implements MouseListener,
         return new Dimension(x + 30, y + 30);
     }
 
-    public void update(Observable o, Object arg)
-    {
+    public void update(Observable o, Object arg) {
         this.repaint();
     }
 
-    public void addActionListener(ActionListener listener)
-    {
+    public void addActionListener(ActionListener listener) {
         actionListener = AWTEventMulticaster.add(actionListener, listener);
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
     }
 
-    public void removeActionListener(ActionListener listener)
-    {
+    public void removeActionListener(ActionListener listener) {
         actionListener = AWTEventMulticaster.remove(actionListener, listener);
     }
 
-    public void mouseClicked(MouseEvent e)
-    {
+    public void mouseClicked(MouseEvent e) {
     }
 
     /* (non-Javadoc)
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
-    public void mousePressed(MouseEvent e)
-    {  	
-    	addMouseMotionListener(this);
+    public void mousePressed(MouseEvent e) {
+        addMouseMotionListener(this);
 
         if (creationLien && enabled) {
             creationLienClic = true;
@@ -585,8 +546,7 @@ public class ZGraphique extends JComponent implements MouseListener,
                 positionsRelatives.clear();
                 for (ZElement elem : selectionCourante)
                     positionsRelatives.put(elem, new Point(x - elem.getX(), y - elem.getY()));
-            }
-            else {
+            } else {
                 ZLien nouvelleSelectionLien = chercheLien(x, y);
                 if (nouvelleSelectionLien != null) {
                     lienClic = nouvelleSelectionLien;
@@ -601,8 +561,7 @@ public class ZGraphique extends JComponent implements MouseListener,
         }
     }
 
-    public void mouseReleased(MouseEvent e)
-    {
+    public void mouseReleased(MouseEvent e) {
         removeMouseMotionListener(this);
 
         if (creationLien && enabled) {
@@ -614,12 +573,11 @@ public class ZGraphique extends JComponent implements MouseListener,
                 y2 = e.getY();
             }
             if (peutCreerLien(lienTemp.getElement(Constantes.MCDENTITE1), lienTemp
-                    .getElement(Constantes.MCDENTITE2))){
+                    .getElement(Constantes.MCDENTITE2))) {
                 addLien(lienTemp);
-            }
-            else
+            } else
                 lienTemp.clearElement();
-            
+
             repaint();
         } else if (enabled) {
             elementPress = null;
@@ -638,18 +596,17 @@ public class ZGraphique extends JComponent implements MouseListener,
         /* Correction Bug Graphique */
         if (getPreferredSize().height > getSize().height
                 || getPreferredSize().width > getSize().width
-        /*
-         * || getPreferredSize().height < getSize().height ||
-         * getPreferredSize().width < getSize().width
-         */)
+            /*
+             * || getPreferredSize().height < getSize().height ||
+             * getPreferredSize().width < getSize().width
+             */)
             this.setSize(getPreferredSize());
 
     }
 
-    public void mouseDragged(MouseEvent e)
-    {
+    public void mouseDragged(MouseEvent e) {
         Point point = new Point();
-        
+
         if (creationLien && enabled) {
             x2 = e.getX();
             y2 = e.getY();
@@ -667,8 +624,7 @@ public class ZGraphique extends JComponent implements MouseListener,
                     elem.setPosition(point);
                 }
                 repaint();
-            }
-            else if (arriveeCadreSelection != null) {
+            } else if (arriveeCadreSelection != null) {
                 arriveeCadreSelection.x = e.getX();
                 arriveeCadreSelection.y = e.getY();
                 selectionTemporaire.clear();
@@ -680,15 +636,12 @@ public class ZGraphique extends JComponent implements MouseListener,
         }
     }
 
-    public void mouseEntered(MouseEvent e)
-    {
+    public void mouseEntered(MouseEvent e) {
     }
 
-    public void mouseExited(MouseEvent e)
-    {
+    public void mouseExited(MouseEvent e) {
     }
 
-    public void mouseMoved(MouseEvent e)
-    {
+    public void mouseMoved(MouseEvent e) {
     }
 }

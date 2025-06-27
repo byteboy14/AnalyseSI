@@ -5,10 +5,6 @@ import org.analyse.core.gui.command.asi.impl.CreateASIProjectCommand;
 import org.analyse.core.gui.command.asi.impl.OpenProjectASICommand;
 import org.analyse.core.gui.command.asi.impl.SaveASICommand;
 import org.analyse.core.gui.command.asi.impl.SaveAsASICommand;
-import org.analyse.core.modules.AnalysePanel;
-import org.analyse.core.modules.ClipboardInterface;
-import org.analyse.core.modules.UndoInterface;
-import org.analyse.main.Main;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -35,18 +31,17 @@ public class ASIKeyHandler extends KeyAdapter {
     }
 
 
-
     protected void setPressedKeyCode(int keyCode) {
         this.pressedKeyCode = keyCode;
     }
 
-    private void findShortCutAndExecuteCommand(){
+    private void findShortCutAndExecuteCommand() {
 
-        if(keyPressedEqualControl(KeyEvent.VK_N)){
+        if (keyPressedEqualControl(KeyEvent.VK_N)) {
             newASIProject();
         }
 
-        if(keyPressedEqualControl(KeyEvent.VK_O)){
+        if (keyPressedEqualControl(KeyEvent.VK_O)) {
             openASIProject();
         }
 
@@ -79,11 +74,11 @@ public class ASIKeyHandler extends KeyAdapter {
                 .equals(KeyEvent.getKeyText(keyEventCode));
     }
 
-    protected void newASIProject(){
+    protected void newASIProject() {
         new CreateASIProjectCommand().execute();
     }
 
-    protected  void openASIProject(){
+    protected void openASIProject() {
         new OpenProjectASICommand().execute();
     }
 
@@ -93,7 +88,7 @@ public class ASIKeyHandler extends KeyAdapter {
     }
 
 
-    protected  void saveAsASI(){
+    protected void saveAsASI() {
         new SaveAsASICommand().execute();
     }
 

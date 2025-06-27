@@ -1,34 +1,29 @@
 /*
  * 03/26/2002 - 21:14:14
- * 
+ *
  * MPD - Copyright (C) 2002 Dreux Loic zgoblin@linuxfreemail.com
- * 
- *  Modifications 
+ *
+ *  Modifications
  *  -------------
  *  Date : 2009 janvier 22
  *  @auteur : Bruno Dabo <bruno.dabo@lywoonsoftware.com>
  *  Date : 2017 Février 04
  *  @auteur : Mehdi CHAABANI
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 package org.analyse.merise.mcd.composant;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.util.Hashtable;
-import java.util.Iterator;
 
 import org.analyse.core.gui.zgraph.ZElement;
 import org.analyse.core.gui.zgraph.ZGraphique;
@@ -40,13 +35,17 @@ import org.analyse.merise.gui.table.DictionnaireTable;
 import org.analyse.merise.main.MeriseModule;
 import org.analyse.merise.sql.SQLCommand;
 
+import java.awt.*;
+import java.util.Hashtable;
+import java.util.Iterator;
+
 public class MPDComponent extends ZGraphique {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8221026150395069033L;
-	private double width;
+     *
+     */
+    private static final long serialVersionUID = -8221026150395069033L;
+    private double width;
     protected Hashtable<String, String> foreignKeys;
 
     public MPDComponent() {
@@ -63,7 +62,7 @@ public class MPDComponent extends ZGraphique {
      */
     public Dimension getPreferredSize() {
         int x = 0, y = 0;
-        for (Iterator<ZElement> e = enumElements(); e.hasNext();) {
+        for (Iterator<ZElement> e = enumElements(); e.hasNext(); ) {
             MPDEntite o = (MPDEntite) e.next();
             x = o.getX() + o.getWidth() > x ? o.getX() + o.getWidth() : x;
             y = o.getY() + o.getHeight() > y ? o.getY() + o.getHeight() : y;
@@ -72,12 +71,11 @@ public class MPDComponent extends ZGraphique {
     }
 
     /**
+     * @param name Nom de l'entité à retourner
      * @return un MPDEntite
-     * @param name
-     *            Nom de l'entité à retourner
      */
     public MPDEntite getMPDEntite(String name) {
-        for (Iterator<ZElement> e = enumElements(); e.hasNext();) {
+        for (Iterator<ZElement> e = enumElements(); e.hasNext(); ) {
             MPDEntite o = (MPDEntite) e.next();
             if (o.getName().equals(name)) {
                 return o;
@@ -112,7 +110,7 @@ public class MPDComponent extends ZGraphique {
 
     public String toString() {
         String res = "{\n";
-        for (Iterator<ZElement> e = enumElements(); e.hasNext();) {
+        for (Iterator<ZElement> e = enumElements(); e.hasNext(); ) {
             res += e.next() + "\n";
         }
         return "}" + res;
@@ -128,51 +126,48 @@ public class MPDComponent extends ZGraphique {
 
         // SQL syntax.
         MeriseModule meriseModule = (MeriseModule) Main.getModule("MERISE");
-        String sqlSyntax = ((SQLPanel)meriseModule.getSQLPanel()).getSQLSyntax();
+        String sqlSyntax = ((SQLPanel) meriseModule.getSQLPanel()).getSQLSyntax();
 
         sql.clear();
 
-        for (Iterator<ZElement> e = enumElements(); e.hasNext();) {
+        for (Iterator<ZElement> e = enumElements(); e.hasNext(); ) {
             ent = (MPDEntite) (e.next());
-                        
+
             /* Edité par B. Bouffet le 18/05/2016
              * "DROP TABLE IF EXISTS" non supporté par Oracle
              * -> Adaptation de la syntaxe
              * Un saut de ligne en trop après chaque point-virgule -> à corriger
              */
             text = "";
-            if ( sqlSyntax.equals(SQLCommand.SQLsyntax.OracleDB.toString()) )
-            {
-            	text = "DECLARE \n";
-            	text += "  existe_";
-            	text +=	Utilities.normaliseString(ent.getName(), Constantes.LOWER);
-            	text += " INTEGER ;";
-            	text += "BEGIN \n";
-            	text += "  SELECT count(*) INTO existe_";
-                text +=	Utilities.normaliseString(ent.getName(), Constantes.LOWER);
-            	text += " FROM user_tables WHERE table_name = upper('";
-            	text +=	Utilities.normaliseString(ent.getName(), Constantes.LOWER);
-            	text += "') ;";
-            	text += "  IF existe_";
-            	text +=	Utilities.normaliseString(ent.getName(), Constantes.LOWER);
-            	text += " > 0 THEN \n";
-            	text += "    EXECUTE IMMEDIATE 'DROP TABLE ";
-            	text +=	Utilities.normaliseString(ent.getName(), Constantes.LOWER);
-            	text += " CASCADE CONSTRAINTS' ;";
-            	text += "  END IF ;";
-            	text += "END ;";
-            }
-            else
-            {
+            if (sqlSyntax.equals(SQLCommand.SQLsyntax.OracleDB.toString())) {
+                text = "DECLARE \n";
+                text += "  existe_";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " INTEGER ;";
+                text += "BEGIN \n";
+                text += "  SELECT count(*) INTO existe_";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " FROM user_tables WHERE table_name = upper('";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += "') ;";
+                text += "  IF existe_";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " > 0 THEN \n";
+                text += "    EXECUTE IMMEDIATE 'DROP TABLE ";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " CASCADE CONSTRAINTS' ;";
+                text += "  END IF ;";
+                text += "END ;";
+            } else {
                 text = "DROP TABLE IF EXISTS " + Utilities.normaliseString(ent.getName(), Constantes.LOWER) + " ;";
             }
             sql.addRequest(text);
-            
+
             text = "CREATE TABLE " + Utilities.normaliseString(ent.getName(), Constantes.LOWER) + " (";
-            
+
             cmp = 0;
             nbId = ent.sizeIdentifiant();
-            
+
             // Stocke les identifiants d'une table qui sont AUTO_INCREMENT
             Hashtable<String, String> autoIncrementIds = new Hashtable<String, String>();
             int nbAutoIncrement = 0;
@@ -180,8 +175,8 @@ public class MPDComponent extends ZGraphique {
             /*
              * bruno
              * date : mars 2009
-             * je rajoute une surcouche pour la gestion des relations reflexives. 
-             * Code à améliorer progressivement lors de la refonte  
+             * je rajoute une surcouche pour la gestion des relations reflexives.
+             * Code à améliorer progressivement lors de la refonte
              */
             Boolean premierefois = true, premier_auto_increment = true;
             String defautType = "";
@@ -202,7 +197,7 @@ public class MPDComponent extends ZGraphique {
                     }
                 }
 
-                String w_info = (ent.getForeignKeys().containsKey(info)) ? info.substring(info.indexOf("_")+1) : info ;
+                String w_info = (ent.getForeignKeys().containsKey(info)) ? info.substring(info.indexOf("_") + 1) : info;
 
                 try {
                     type = (String) data.getValue(w_info, DictionnaireTable.TYPE);
@@ -212,26 +207,26 @@ public class MPDComponent extends ZGraphique {
 
                 // PostgreSQL specific auto increment: SERIAL
                 if (premier_auto_increment && sqlSyntax.equals(SQLCommand.SQLsyntax.PostgreSQL.toString())) {
-                    if(type.equals(Constantes.INT)) {
+                    if (type.equals(Constantes.INT)) {
                         type = Constantes.INT_AUTO_INCREMENT_POSTGRESQL;
-                    } else if(type.equals(Constantes.BIGINT)) {
+                    } else if (type.equals(Constantes.BIGINT)) {
                         type = Constantes.BIGINT_AUTO_INCREMENT_POSTGRESQL;
                     }
                 }
 
-			/*
-			 * Edité par B. Bouffet le 13/05/2016
-			 * Si syntaxe Oracle Database, mémorisation des clés primaires de type AUTO_INCREMENT.
-			 * Cela va permettre la création de triggers.
-			 */
-			if (premier_auto_increment && sqlSyntax.equals(SQLCommand.SQLsyntax.OracleDB.toString())) {
-				nbAutoIncrement++;
-				autoIncrementIds.put("Id # " + nbAutoIncrement, Utilities.normaliseString(ent.getCodeInformation(0), Constantes.LOWER));
-			}
-        	/*
-        	 * Fin de l'édition
-        	 */
-        	 
+                /*
+                 * Edité par B. Bouffet le 13/05/2016
+                 * Si syntaxe Oracle Database, mémorisation des clés primaires de type AUTO_INCREMENT.
+                 * Cela va permettre la création de triggers.
+                 */
+                if (premier_auto_increment && sqlSyntax.equals(SQLCommand.SQLsyntax.OracleDB.toString())) {
+                    nbAutoIncrement++;
+                    autoIncrementIds.put("Id # " + nbAutoIncrement, Utilities.normaliseString(ent.getCodeInformation(0), Constantes.LOWER));
+                }
+                /*
+                 * Fin de l'édition
+                 */
+
                 // PostgreSQL: convert DATETIME to TIMESTAMP
                 if (sqlSyntax.equals(SQLCommand.SQLsyntax.PostgreSQL.toString())) {
 
@@ -241,16 +236,16 @@ public class MPDComponent extends ZGraphique {
                 }
 
                 if (premier_auto_increment) {
-                	/* 
-                	 * traiter le cas des relations ternaires   
-                	 */
-                	
+                    /*
+                     * traiter le cas des relations ternaires
+                     */
+
                     if ("INT_AUTO_INCREMENT".equals(type)) {
-			            info = Utilities.normaliseString(info, Constantes.LOWER);
-                        type = Constantes.INT_AUTO_INCREMENT ;  // Bug #567501
+                        info = Utilities.normaliseString(info, Constantes.LOWER);
+                        type = Constantes.INT_AUTO_INCREMENT;  // Bug #567501
                     }
                     if ("BIGINT_AUTO_INCREMENT".equals(type)) {
-			            info = Utilities.normaliseString(info, Constantes.LOWER);
+                        info = Utilities.normaliseString(info, Constantes.LOWER);
                         type = Constantes.BIGINT_AUTO_INCREMENT;  // Bug #567501
                     }
                 } else {
@@ -258,20 +253,20 @@ public class MPDComponent extends ZGraphique {
                     //info = String.valueOf(data.getValue(info, DictionnaireTable.NAME));
                     if ("BIGINT_AUTO_INCREMENT".equals(type)) {
                         info = Utilities.normaliseString(info, Constantes.LOWER);
-			            type = "BIGINT";
+                        type = "BIGINT";
                     }   // evite de se retrouver avec AUTO_INCREMENT sur une clé étrangère
                     if ("INT_AUTO_INCREMENT".equals(type)) {
                         info = Utilities.normaliseString(info, Constantes.LOWER);
-			            type = "INT";
+                        type = "INT";
                     }   // evite de se retrouver avec AUTO_INCREMENT sur une clé étrangère
 
                 }
-                
+
                 //info = Utilities.normaliseString(info, Constantes.LOWER);  // Bug #622229
                 text += info + " " + type;
 
                 try {
-                    w_info = (ent.getForeignKeys().containsKey(info)) ? info.substring(info.indexOf("_")+1) : info ;
+                    w_info = (ent.getForeignKeys().containsKey(info)) ? info.substring(info.indexOf("_") + 1) : info;
 
                     if (((Integer) data.getValue(w_info, DictionnaireTable.SIZE)).intValue() != 0
                             && !sql.getTypesWithoutSize().contains(data.getValue(w_info, DictionnaireTable.TYPE))) {
@@ -316,12 +311,12 @@ public class MPDComponent extends ZGraphique {
             //	  continue ;
 
             text += ",PRIMARY KEY (";
-            
+
             cmp = 0;
             nbId = ent.sizeIdentifiant();
 
             for (Iterator<String> e2 = ent.elementsInformations(); e2.hasNext()
-                    && cmp < nbId;) {
+                    && cmp < nbId; ) {
 
                 text += Utilities.normaliseString(e2.next(), Constantes.LOWER);  // Bug #622229
                 cmp++;
@@ -333,72 +328,69 @@ public class MPDComponent extends ZGraphique {
             text += "))";
 
             // MySQL syntax
-            if (sqlSyntax.equals(SQLCommand.SQLsyntax.MySQL.toString()))
-            {
+            if (sqlSyntax.equals(SQLCommand.SQLsyntax.MySQL.toString())) {
                 text += " ENGINE=InnoDB;";
-            }
-            else {  // other syntax (PostgreSQL, ...)
+            } else {  // other syntax (PostgreSQL, ...)
                 text += ";";
             }
 
-        	sql.addRequest(text);
-        	
-       		/* Edité par B. Bouffet le 13/05/2016
-        	 * Syntaxe Oracle : création d'un trigger en cas d'identifiant de type AUTO_INCREMENT
-        	 * Un saut de ligne en trop après chaque point-virgule -> à corriger
-        	 */
-        	if ( sqlSyntax.equals(SQLCommand.SQLsyntax.OracleDB.toString()) && (!autoIncrementIds.isEmpty()) )
-        	{
-        		text = "\n";
-        		text += "CREATE SEQUENCE SEQ_";
-        		text += Utilities.normaliseString(ent.getName(), Constantes.LOWER) ;
-        		text += " ;";
-        		sql.addRequest(text);
-        		
-        		text = "";
-        		text += "CREATE TRIGGER TRIG_";
-        		text += Utilities.normaliseString(ent.getName(), Constantes.LOWER) ;
-        		text += " BEFORE INSERT ON ";
-        		text += Utilities.normaliseString(ent.getName(), Constantes.LOWER) ;
-        		text += " FOR EACH ROW \n";
-        		text += " BEGIN \n";
-        		text += " SELECT SEQ_";
-        		text += Utilities.normaliseString(ent.getName(), Constantes.LOWER) ;
-        		text += ".NEXTVAL";
-        		text += " INTO :new.";
-        		text += autoIncrementIds.get("Id # 1");
-        		text += " FROM DUAL ;";
-        		text += " END ;";
-        		sql.addRequest(text);
-        	}
-        	/*
-        	 * Fin de l'édition
-        	 */
+            sql.addRequest(text);
+
+            /* Edité par B. Bouffet le 13/05/2016
+             * Syntaxe Oracle : création d'un trigger en cas d'identifiant de type AUTO_INCREMENT
+             * Un saut de ligne en trop après chaque point-virgule -> à corriger
+             */
+            if (sqlSyntax.equals(SQLCommand.SQLsyntax.OracleDB.toString()) && (!autoIncrementIds.isEmpty())) {
+                text = "\n";
+                text += "CREATE SEQUENCE SEQ_";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " ;";
+                sql.addRequest(text);
+
+                text = "";
+                text += "CREATE TRIGGER TRIG_";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " BEFORE INSERT ON ";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += " FOR EACH ROW \n";
+                text += " BEGIN \n";
+                text += " SELECT SEQ_";
+                text += Utilities.normaliseString(ent.getName(), Constantes.LOWER);
+                text += ".NEXTVAL";
+                text += " INTO :new.";
+                text += autoIncrementIds.get("Id # 1");
+                text += " FROM DUAL ;";
+                text += " END ;";
+                sql.addRequest(text);
+            }
+            /*
+             * Fin de l'édition
+             */
         }
 
 
         info = "";
 
-        for (Iterator<ZElement> e = enumElements(); e.hasNext();) {
-           
+        for (Iterator<ZElement> e = enumElements(); e.hasNext(); ) {
+
             ent = (MPDEntite) (e.next());
 
             if (!ent.foreignKeysIsEmpty()) {
-                for (Iterator<String> e2 = ent.elementsInformations(); e2.hasNext();) {
+                for (Iterator<String> e2 = ent.elementsInformations(); e2.hasNext(); ) {
 
                     info = e2.next();
 
                     if (ent.getTableForeignKey(info) != null) {
-                    		
-                                // Bug #622229
-                                text = "ALTER TABLE "
-                                        + Utilities.normaliseString(ent.getName(),
-                                        Constantes.LOWER) + " ADD CONSTRAINT FK_"
-                                        + Utilities.normaliseString(ent.getName(),
-                                        Constantes.LOWER) + "_" + Utilities.normaliseString(info, Constantes.LOWER)
-                                        + " FOREIGN KEY (" + Utilities.normaliseString(info, Constantes.LOWER) + ") REFERENCES "
-                                        + ent.getTableForeignKey(info) + " (" + Utilities.normaliseString( this.getMPDEntite ( ent.getTableForeignKey(info) ).getCodeInformation(0), Constantes.LOWER)
-                                        + ");";
+
+                        // Bug #622229
+                        text = "ALTER TABLE "
+                                + Utilities.normaliseString(ent.getName(),
+                                Constantes.LOWER) + " ADD CONSTRAINT FK_"
+                                + Utilities.normaliseString(ent.getName(),
+                                Constantes.LOWER) + "_" + Utilities.normaliseString(info, Constantes.LOWER)
+                                + " FOREIGN KEY (" + Utilities.normaliseString(info, Constantes.LOWER) + ") REFERENCES "
+                                + ent.getTableForeignKey(info) + " (" + Utilities.normaliseString(this.getMPDEntite(ent.getTableForeignKey(info)).getCodeInformation(0), Constantes.LOWER)
+                                + ");";
                         sql.addRequest(text);
                     }
                 }
@@ -407,7 +399,7 @@ public class MPDComponent extends ZGraphique {
     }
 
     /**
-     *  
+     *
      */
     public void clear() {
         foreignKeys.clear();

@@ -1,22 +1,22 @@
 /*
  * 05/05/2002 - 22:26:20
- * 
+ *
  * ZLien - Copyright (C) 2002 Dreux Loic dreuxl@free.fr
- * 
- * Modifications : 
+ *
+ * Modifications :
  * ---------------
  *   Auteur : Bruno Dabo <bruno.dabo@lywoonsoftware.com>
  *   Date   : 2009 jan 22
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -24,47 +24,53 @@
 
 package org.analyse.core.gui.zgraph;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import org.analyse.core.util.Constantes;  
+import org.analyse.core.util.Constantes;
 
-public abstract class ZLien
-{
-    
-    /** premier <code>ZElement</code> à lier */
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+public abstract class ZLien {
+
+    /**
+     * premier <code>ZElement</code> à lier
+     */
     protected ZElement elem1;
 
-    /** deuxième <code>ZElement</code> à lier */
+    /**
+     * deuxième <code>ZElement</code> à lier
+     */
     protected ZElement elem2;
     protected ZElement elem3;  // bdabo janv 2009 
-    
-    /** Position x1 */
+
+    /**
+     * Position x1
+     */
     protected int x1;
 
-    /** Position x2 */
+    /**
+     * Position x2
+     */
     protected int x2;
 
-    /** Position y1 */
+    /**
+     * Position y1
+     */
     protected int y1;
 
-    /** Position y2 */
+    /**
+     * Position y2
+     */
     protected int y2;
 
     /**
      * Définie un <code>ZLien</code> avec les deux <code>ZElement</code>
      * qu'il lie
-     * 
-     * @param elem1
-     *            premier <code>ZElement</code> à lier
-     * @param elem2
-     *            deuxième <code>ZElement</code> à lier
-     * @param elem3
-     *            troisieme <code>ZElement</code> à lier
+     *
+     * @param elem1 premier <code>ZElement</code> à lier
+     * @param elem2 deuxième <code>ZElement</code> à lier
+     * @param elem3 troisieme <code>ZElement</code> à lier
      */
-    public ZLien(ZElement elem1, ZElement elem2, ZElement elem3)
-    {
+    public ZLien(ZElement elem1, ZElement elem2, ZElement elem3) {
         this.elem1 = elem1;
         this.elem2 = elem2;
         this.elem3 = elem3;
@@ -74,17 +80,17 @@ public abstract class ZLien
      * Définie un <code> ZLien </code> sans argument. Ce lien est destiné à être
      * lié par la suite dans le <code> ZGraphique </code>
      */
-    public ZLien()
-    {
+    public ZLien() {
         this(null, null, null);
     }
 
-    /** Change l'élément 1, 2 ou 3 */
-    public void setElement(ZElement elem, String index)
-    {
-        if (index == Constantes.MCDENTITE1 )
+    /**
+     * Change l'élément 1, 2 ou 3
+     */
+    public void setElement(ZElement elem, String index) {
+        if (index == Constantes.MCDENTITE1)
             this.elem1 = elem;
-        else if (index == Constantes.MCDENTITE2 )
+        else if (index == Constantes.MCDENTITE2)
             this.elem2 = elem;
         else if (index == Constantes.MCDASSOCIATION)
             this.elem3 = elem;
@@ -92,14 +98,15 @@ public abstract class ZLien
             throw new IllegalArgumentException("");
     }
 
-    /** Retourne l'élément 1, 2 ou 3 */
-    public ZElement getElement(String index)
-    {
-        if (index == Constantes.MCDENTITE1 )
+    /**
+     * Retourne l'élément 1, 2 ou 3
+     */
+    public ZElement getElement(String index) {
+        if (index == Constantes.MCDENTITE1)
             return elem1;
-        else if (index == Constantes.MCDENTITE2 )
+        else if (index == Constantes.MCDENTITE2)
             return elem2;
-        else if (index == Constantes.MCDASSOCIATION )
+        else if (index == Constantes.MCDASSOCIATION)
             return elem3;
 
         throw new IllegalArgumentException("");
@@ -114,9 +121,8 @@ public abstract class ZLien
      * Redessine le composant dans un <code>ZGraphique</code> Attention : il
      * est important d'appeler une méthode de calcul des coordonnées des points :
      * soit calculPositionsDefaut() ou calculPositionsCentre().
-     * 
-     * @param g
-     *            Graphics du <code>ZGraphique</code>
+     *
+     * @param g Graphics du <code>ZGraphique</code>
      */
     public abstract void paint(Graphics g);
 
@@ -124,8 +130,7 @@ public abstract class ZLien
      * <br>
      * Inverse les deux Elements : elem1 devient elem2 elem2 devient elem1</br>
      */
-    public void inverseZElements()
-    {
+    public void inverseZElements() {
         ZElement elem = elem1;
         elem1 = elem2;
         elem2 = elem;
@@ -134,8 +139,7 @@ public abstract class ZLien
     /**
      * Dessine le focus du composant s'il est sélectionné
      */
-    public void paintFocus(Graphics g)
-    {
+    public void paintFocus(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         Rectangle2D r;
 
@@ -148,9 +152,10 @@ public abstract class ZLien
         g2d.fill(r);
     }
 
-    /** Calcul des coordonnées des deux extrémités par défaut */
-    protected void updateDefaultLocation()
-    {
+    /**
+     * Calcul des coordonnées des deux extrémités par défaut
+     */
+    protected void updateDefaultLocation() {
         //Récupération des centres
         int centrex1 = (elem1.getX() + elem1.getWidth() / 2);
         int centrey1 = (elem1.getY() + elem1.getHeight() / 2);
@@ -173,9 +178,10 @@ public abstract class ZLien
         }
     }
 
-    /** Calcul des coordonnées par rapport au centre */
-    public void updateLocation()
-    {
+    /**
+     * Calcul des coordonnées par rapport au centre
+     */
+    public void updateLocation() {
         double theta, l1, l2, l3, diagonale;
 
         double thetas[] = new double[4];
@@ -257,28 +263,23 @@ public abstract class ZLien
         }
     }
 
-    public int getX1()
-    {
+    public int getX1() {
         return x1;
     }
 
-    public int getY1()
-    {
+    public int getY1() {
         return y1;
     }
 
-    public int getX2()
-    {
+    public int getX2() {
         return x2;
     }
 
-    public int getY2()
-    {
+    public int getY2() {
         return y2;
     }
 
-    public boolean isSelected(int mousex, int mousey)
-    {
+    public boolean isSelected(int mousex, int mousey) {
         double a, b, c, h, g;
 
         a = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
@@ -297,19 +298,16 @@ public abstract class ZLien
                 && mousey > y2 - 10);
     }
 
-    public void notifyZLien()
-    {
+    public void notifyZLien() {
         elem1.changementLien();
         elem1.notifyZElement();
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "ZLien, " + info();
     }
 
-    public String info()
-    {
+    public String info() {
         return "Element 1 : {" + elem1 + "}, Element 2 : {" + elem2
                 + "}, Element 3 : {" + elem3 + "}, Point1(" + x1 + ";" + y1 + "), Point2(" + x2 + ";" + y2
                 + ")";
