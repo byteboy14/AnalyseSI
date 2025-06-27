@@ -189,10 +189,19 @@ public class AnalyseSave {
         int choix = this.popupSauvegarde();
         if (choix == JOptionPane.CANCEL_OPTION) return;
 
-        String fileName = null;
-        fileName = chooseFile(Constantes.OPEN);
+        String fileName = chooseFile(Constantes.OPEN);
 
         open(fileName);
+    }
+
+    private String chooseFile(String mode) {
+        JFileChooser chooser = getFileChooser(mode);
+
+        if (chooser.showDialog(org.analyse.main.Main.analyseFrame, null) == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getAbsolutePath();
+        }
+
+        return null;
     }
 
     public void open(String fileName) {
@@ -357,15 +366,7 @@ public class AnalyseSave {
         return chooser;
     }
 
-    private String chooseFile(String mode) {
-        JFileChooser chooser = getFileChooser(mode);
 
-        if (chooser.showDialog(org.analyse.main.Main.analyseFrame, null) == JFileChooser.APPROVE_OPTION) {
-            return chooser.getSelectedFile().getAbsolutePath();
-        }
-
-        return null;
-    }
 
     public void setNewOption(boolean newOption) {
         this.newOption = newOption;
