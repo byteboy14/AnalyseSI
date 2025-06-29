@@ -34,9 +34,11 @@
 
 package org.analyse.core.util.save;
 
+import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.gui.frame.FrameObserver;
 import org.analyse.core.modules.AnalyseModule;
 import org.analyse.core.save.FiltreASI;
+import org.analyse.core.state.AppState;
 import org.analyse.core.util.Constantes;
 import org.analyse.core.util.GUIUtilities;
 import org.analyse.core.util.Utilities;
@@ -79,9 +81,21 @@ public class AnalyseSave {
 
     private List<FiltreASI> filtres;
 
-    public AnalyseSave() {
-        this.setSave(true);
+    private AppState state ;
 
+    public AnalyseSave() {
+
+        state = new AppState();
+        init();
+    }
+
+    public AnalyseSave(AppState state ) {
+        this.state = state;
+        init();
+    }
+
+    private void init(){
+        this.setSave(true);
         initFilter();
         initFileChooser();
     }
@@ -221,8 +235,10 @@ public class AnalyseSave {
         AnalyseFilter af = getAnalyseFilter();
         if (af != null && af.canOpen())
             ((Open) af).open(new File(this.fileName));
-        FrameObserver.Instance()
-                .updateFrameTitle(Utilities.getRelease() + " - " + this.fileName);
+
+        state.setTitle(Utilities.getRelease() + " - " + this.fileName);
+        state.setFileName(this.fileName);
+
     }
 
     private int popupExit() {

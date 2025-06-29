@@ -17,8 +17,11 @@ public class OpenProjectASICommand extends ASICommand {
     @Override
     public void execute() {
 
-        if (filename != null) analyseSave.open(filename);
-        else
-            analyseSave.open();
+        executeWithState(()->{
+            if (filename != null) analyseSave.open(filename);
+            else
+                analyseSave.open();
+        });
+
     }
 }
