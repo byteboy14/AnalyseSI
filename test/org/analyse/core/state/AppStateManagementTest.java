@@ -1,7 +1,5 @@
 package org.analyse.core.state;
 
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,11 +19,11 @@ public class AppStateManagementTest {
         String fileName = "file name ";
 
         assertEquals("Should be the same ", "",
-                stateManagement.getState().getFileName());
+                stateManagement.getStateCopy().getFileName());
 
-        stateManagement.getState().setFileName(fileName);
+        stateManagement.getStateCopy().setFileName(fileName);
 
-        AppState state = AppStateManagement.getInstance().getState();
+        AppState state = AppStateManagement.getInstance().getStateCopy();
 
         assertEquals("Should be the same ", fileName, state.getFileName());
     }
@@ -37,12 +35,12 @@ public class AppStateManagementTest {
         state.setFileName("file name ");
 
         assertNotEquals("Should not be the same ", state.getFileName(),
-                stateManagement.getState().getFileName());
+                stateManagement.getStateCopy().getFileName());
 
         stateManagement.saveState(state);
 
         assertEquals("Should be the same ", state.getFileName(),
-                AppStateManagement.getInstance().getState().getFileName());
+                AppStateManagement.getInstance().getStateCopy().getFileName());
     }
 
 }
