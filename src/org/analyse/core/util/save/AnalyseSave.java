@@ -81,7 +81,7 @@ public class AnalyseSave {
 
     private List<FiltreASI> filtres;
 
-    private AppState state ;
+    private final AppState state ;
 
     public AnalyseSave() {
 
@@ -96,6 +96,7 @@ public class AnalyseSave {
 
     private void init(){
         this.setSave(true);
+        this.fileName = state.getFileName();
         initFilter();
         initFileChooser();
     }
@@ -271,7 +272,7 @@ public class AnalyseSave {
 
     private int popupSauvegarde() {
 
-        if (this.fileName == null) return JOptionPane.CLOSED_OPTION;
+        if (isSave) return JOptionPane.CLOSED_OPTION;
 
         int choix = GUIUtilities.question_YES_NO_CANCEL(Utilities.getLangueMessage(Constantes.MESSAGE_SAUVEGARDER_FICHIER_ENCOURS));
 
