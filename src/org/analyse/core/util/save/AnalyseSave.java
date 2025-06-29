@@ -210,6 +210,10 @@ public class AnalyseSave {
 
     private String chooseFile(String mode) {
         JFileChooser chooser = getFileChooser(mode);
+        File currentFile = new File(state.getFileName());
+        if(currentFile.exists()){
+            chooser.setCurrentDirectory(currentFile.getParentFile());
+        }
 
         if (chooser.showDialog(org.analyse.main.Main.analyseFrame, null) == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getAbsolutePath();
