@@ -59,4 +59,12 @@ public class AppStateTest {
 
         assertEquals(state.isProjectFileEquals(newState), expected);
     }
+
+    @Test
+    public void getFileName() {
+        assertEquals("", state.getFileName());
+
+        state.setFileName(fileName);
+        assertEquals(fileName, state.getFileName());
+    }
 }

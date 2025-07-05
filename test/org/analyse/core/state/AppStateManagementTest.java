@@ -21,7 +21,10 @@ public class AppStateManagementTest {
         assertEquals("Should be the same ", "",
                 stateManagement.getStateCopy().getFileName());
 
-        stateManagement.getStateCopy().setFileName(fileName);
+        AppState tempState = stateManagement.getStateCopy();
+        tempState.setFileName(fileName);
+
+        stateManagement.saveState(tempState);
 
         AppState state = AppStateManagement.getInstance().getStateCopy();
 
