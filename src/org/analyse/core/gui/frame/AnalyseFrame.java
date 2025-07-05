@@ -34,6 +34,8 @@ import org.analyse.core.gui.shortcuts.ASIKeyHandler;
 import org.analyse.core.gui.toolbar.AnalyseToolbar;
 import org.analyse.core.gui.windowfocus;
 import org.analyse.core.modules.AnalysePanel;
+import org.analyse.core.state.AppState;
+import org.analyse.core.state.AppStateManagement;
 import org.analyse.core.util.Constantes;
 import org.analyse.core.util.GUIUtilities;
 import org.analyse.core.util.Utilities;
@@ -287,6 +289,14 @@ public class AnalyseFrame extends JFrame implements FrameListener {
 
 
         this.panelCurrent = panelCurrent;
+        updateAppStateCurrentPanel(panelCurrent);
+    }
+
+    private void updateAppStateCurrentPanel(AnalysePanel panel ){
+        AppState state = AppStateManagement.getInstance().getStateCopy();
+
+        state.setCurrentPanel(panel);
+        AppStateManagement.getInstance().saveState(state);
     }
 
     /**
