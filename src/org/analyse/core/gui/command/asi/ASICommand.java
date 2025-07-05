@@ -50,7 +50,16 @@ public abstract class ASICommand implements Command {
     }
 
     private void setupDefaultPanelIfOpeningFileFirstTime(){
-        //TODO: setup dictionary panel as default at start
+
+        state = AppStateManagement.getInstance().getStateCopy();
+        if(currentPanelIsDefaultStartupPanel()){
+            //TODO : start dictionary table panel
+            System.out.println(" change panel ");
+        }
+    }
+
+    private Boolean currentPanelIsDefaultStartupPanel() {
+        return state.getCurrentPanel().equals("HelpPanel");
     }
 
 
