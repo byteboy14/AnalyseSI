@@ -30,7 +30,7 @@ public class AppState {
         this.title = title;
     }
 
-    public boolean isEquals(AppState state ){
+    public boolean isProjectFileEquals(AppState state ){
 
         try {
             if (!fileName.equals(state.getFileName())) return false;

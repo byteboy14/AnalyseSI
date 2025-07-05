@@ -1,6 +1,5 @@
 package org.analyse.core.state;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +49,7 @@ public class AppStateTest {
     }
 
     @Test
-    public void isEquals() {
+    public void isProjectFileEquals() {
         state.setTitle(title);
         state.setFileName(fileName);
         AppState newState = new AppState();
@@ -58,6 +57,6 @@ public class AppStateTest {
         newState.setFileName(fileName2);
 
 
-        assertEquals(state.isEquals(newState), expected);
+        assertEquals(state.isProjectFileEquals(newState), expected);
     }
 }

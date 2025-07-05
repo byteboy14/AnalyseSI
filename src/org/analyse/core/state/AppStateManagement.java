@@ -12,7 +12,7 @@ public class AppStateManagement {
 
     public void saveState(AppState state ,
                           AppStateListener listener ){
-        if(!instance.getStateCopy().isEquals(state)){
+        if(!instance.getStateCopy().isProjectFileEquals(state)){
             listener.onStateChange(state);
             instance.saveState(state);
         }
