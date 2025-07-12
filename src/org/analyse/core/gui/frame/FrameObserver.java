@@ -16,6 +16,10 @@ public class FrameObserver {
         listener.updateTitle(title);
     }
 
+    public void openDefaultPanel() {
+        listener.openDefaultPanel();
+    }
+
     public static FrameObserver Instance() {
         if (observer == null) observer = new FrameObserver();
 

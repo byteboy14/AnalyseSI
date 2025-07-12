@@ -73,5 +73,10 @@ public class FrameObserverTest {
         public void updateTitle(String title) {
             this.title = title;
         }
+
+        @Override
+        public void openDefaultPanel() {
+
+        }
     }
 }

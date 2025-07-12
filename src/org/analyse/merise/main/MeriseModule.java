@@ -75,6 +75,8 @@ public class MeriseModule extends AnalyseModule {
         dictionnaireTable = new DictionnaireTable(sqlCommand.getTypes());
         dictionnairePanel = new DictionnairePanel(dictionnaireTable);
 
+        analyseFrame.setDefaultPanel(dictionnairePanel);
+
         mcdComponent = new MCDComponent(dictionnaireTable);
         mpdComponent = new MPDComponent();
         mldComponent = new MLDComponent();

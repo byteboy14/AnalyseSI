@@ -52,13 +52,12 @@ public abstract class ASICommand implements Command {
     private void setupDefaultPanelIfOpeningFileFirstTime(){
 
         state = AppStateManagement.getInstance().getStateCopy();
-        if(currentPanelIsDefaultStartupPanel()){
-            //TODO : start dictionary table panel
-            System.out.println(" change panel ");
+        if(currentPanelIsNotMeriseComponentPanel()){
+            FrameObserver.Instance().openDefaultPanel();
         }
     }
 
-    private Boolean currentPanelIsDefaultStartupPanel() {
+    private Boolean currentPanelIsNotMeriseComponentPanel() {
         return state.getCurrentPanel().equals("HelpPanel");
     }
 

@@ -81,6 +81,8 @@ public class AnalyseFrame extends JFrame implements FrameListener {
 
     private AnalysePanel panelCurrent;
 
+    private AnalysePanel defaultPanel;
+
     private AnalysePanel helpPanel;
 
     private AnalyseFrame analyseframe;
@@ -274,6 +276,17 @@ public class AnalyseFrame extends JFrame implements FrameListener {
 
     }
 
+
+    @Override
+    public void updateTitle(String title) {
+        setTitle(title);
+    }
+
+    @Override
+    public void openDefaultPanel() {
+        setPanel(defaultPanel);
+    }
+
     /**
      * Modifie le panel courant.
      *
@@ -304,6 +317,10 @@ public class AnalyseFrame extends JFrame implements FrameListener {
      */
     public AnalysePanel getCurrentPanel() {
         return panelCurrent;
+    }
+
+    public void setDefaultPanel(AnalysePanel defaultPanel) {
+        this.defaultPanel = defaultPanel;
     }
 
     /**
@@ -357,13 +374,8 @@ public class AnalyseFrame extends JFrame implements FrameListener {
 
     }
 
-    @Override
-    public void updateTitle(String title) {
-        setTitle(title);
-    }
 
     private class WindowHandler extends WindowAdapter {
-        private boolean hasbeenactivated = false;
         private AnalyseFrame af;
 
         public WindowHandler(AnalyseFrame af) {
