@@ -34,7 +34,6 @@
 
 package org.analyse.core.util.save;
 
-import org.analyse.core.gui.frame.AnalyseFrame;
 import org.analyse.core.gui.frame.FrameObserver;
 import org.analyse.core.modules.AnalyseModule;
 import org.analyse.core.save.FiltreASI;
@@ -81,7 +80,7 @@ public class AnalyseSave {
 
     private List<FiltreASI> filtres;
 
-    private final AppState state ;
+    protected final AppState state ;
 
     public AnalyseSave() {
 
@@ -95,8 +94,6 @@ public class AnalyseSave {
     }
 
     private void init(){
-        this.setSave(true);
-        this.fileName = state.getFileName();
         initFilter();
         initFileChooser();
     }
@@ -113,20 +110,21 @@ public class AnalyseSave {
      * saveAs est lancée.
      */
     public void save() {
-
-        if (this.fileName == null) {
+        this.fileName = state.getFileName();
+        if (this.fileName == null || this.fileName.isEmpty()) {
             saveAs();
             return;
 
-        }
-
-        if (!this.isSave()) {
-            saveAs();
-            return;
         }
 
         this.setSave(true);
 
+        this.executeSaving();
+
+
+    }
+
+    protected void executeSaving() {
         AnalyseFilter af = getAnalyseFilter();
         if (af != null && af.canSave()) {
 
@@ -148,8 +146,6 @@ public class AnalyseSave {
             }
 
         }
-
-
     }
 
     /**
