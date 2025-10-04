@@ -151,6 +151,8 @@ public final class Main {
 
         if (args.length > 0)
             new OpenProjectASICommand(args[0]).execute();
+        else
+            new OpenProjectASICommand().execute();
     }
 
     public static AnalyseModule getModule(String id) {
