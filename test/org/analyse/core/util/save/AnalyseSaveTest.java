@@ -38,15 +38,47 @@ public class AnalyseSaveTest {
         assertFalse(analyseSave.isSaveAsPushed);
     }
 
+    @Test
+    public void open_forTheFirstTime() {
+        analyseSave.openForTheFirstTime();
+
+        assertTrue(analyseSave.isOpening);
+        assertFalse(analyseSave.isSavePushed);
+        assertFalse(analyseSave.isSaveAsPushed);
+        assertFalse(analyseSave.askToSave);
+    }
+
+    @Test
+    public void open_afterTheFirstTime_projectSaved() {
+        analyseSave.openAfterTheFirstTimeWithProjectSaved();
+
+        assertTrue(analyseSave.isOpening);
+        assertFalse(analyseSave.isSavePushed);
+        assertFalse(analyseSave.isSaveAsPushed);
+        assertFalse(analyseSave.askToSave);
+    }
+
+    @Test
+    public void open_afterTheFirstTime_projectNotSaved() {
+        analyseSave.openAfterTheFirstTime();
+
+        assertTrue(analyseSave.isOpening);
+        assertFalse(analyseSave.isSavePushed);
+        assertFalse(analyseSave.isSaveAsPushed);
+        assertTrue(analyseSave.askToSave);
+    }
+
     @After
     public void tearDown(){
         this.analyseSave.reinitState();
     }
 
 
-    private class AnalyseSaveForTest extends AnalyseSave {
+    private static class AnalyseSaveForTest extends AnalyseSave {
         public boolean isSaveAsPushed = false;
         public boolean isSavePushed = false;
+        public boolean isOpening = false ;
+        public boolean askToSave = false ;
 
         public void saveForTheFirstTime() {
             this.state.setFileName(new AppState().getFileName());
@@ -74,9 +106,41 @@ public class AnalyseSaveTest {
             // leave empty
         }
 
+        public void openForTheFirstTime() {
+            setSave(false);
+            state.setFileName("");
+            open();
+        }
+
+        public void openAfterTheFirstTime() {
+            setSave(false);
+            state.setFileName("documentAsi.asi");
+            open();
+        }
+
+        public void openAfterTheFirstTimeWithProjectSaved() {
+            setSave(true);
+            state.setFileName("documentAsi.asi");
+            open();
+        }
+
+        @Override
+        protected  String chooseFile(String mode ){
+            isOpening = true ;
+            return "";
+        }
+
+        @Override
+        protected int askToSaveDialog() {
+            askToSave = true ;
+            return 0;
+        }
+
         public void reinitState(){
             isSavePushed = false ;
             isSaveAsPushed = false ;
+            isOpening = false ;
+            askToSave = false ;
         }
     }
 }

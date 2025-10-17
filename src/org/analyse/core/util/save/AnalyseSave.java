@@ -80,7 +80,7 @@ public class AnalyseSave {
 
     private List<FiltreASI> filtres;
 
-    protected final AppState state ;
+    protected final AppState state;
 
     public AnalyseSave() {
 
@@ -88,12 +88,12 @@ public class AnalyseSave {
         init();
     }
 
-    public AnalyseSave(AppState state ) {
+    public AnalyseSave(AppState state) {
         this.state = state;
         init();
     }
 
-    private void init(){
+    private void init() {
         initFilter();
         initFileChooser();
     }
@@ -197,18 +197,39 @@ public class AnalyseSave {
      */
     public void open() {
 
-        int choix = this.popupSauvegarde();
-        if (choix == JOptionPane.CANCEL_OPTION) return;
+        int choice = -1;
 
-        String fileName = chooseFile(Constantes.OPEN);
+        if (!isSave && !state.getFileName().isEmpty()) {
+           choice = askToSaveDialog();
+        }
 
-        open(fileName);
+        if(choice != JOptionPane.CANCEL_OPTION) {
+            String fileName = chooseFile(Constantes.OPEN);
+
+            open(fileName);
+        }
     }
 
-    private String chooseFile(String mode) {
+    protected int askToSaveDialog() {
+        return popupSauvegarde();
+    }
+
+    private int popupSauvegarde() {
+
+        if (isSave) return JOptionPane.CLOSED_OPTION;
+
+        int choix = GUIUtilities.question_YES_NO_CANCEL(Utilities.getLangueMessage(Constantes.MESSAGE_SAUVEGARDER_FICHIER_ENCOURS));
+
+        if (choix == JOptionPane.YES_OPTION)
+            save();
+
+        return choix;
+    }
+
+    protected String chooseFile(String mode) {
         JFileChooser chooser = getFileChooser(mode);
         File currentFile = new File(state.getFileName());
-        if(currentFile.exists()){
+        if (currentFile.exists()) {
             chooser.setCurrentDirectory(currentFile.getParentFile());
         }
 
@@ -266,17 +287,7 @@ public class AnalyseSave {
         return choix;
     }
 
-    private int popupSauvegarde() {
 
-        if (isSave) return JOptionPane.CLOSED_OPTION;
-
-        int choix = GUIUtilities.question_YES_NO_CANCEL(Utilities.getLangueMessage(Constantes.MESSAGE_SAUVEGARDER_FICHIER_ENCOURS));
-
-        if (choix == JOptionPane.YES_OPTION)
-            save();
-
-        return choix;
-    }
 
     private int popupFichierExiste() {
         int choix = GUIUtilities.question_YES_NO(Utilities.getLangueMessage(Constantes.MESSAGE_FICHIER_EXISTANT));
@@ -382,7 +393,6 @@ public class AnalyseSave {
 
         return chooser;
     }
-
 
 
     public void setNewOption(boolean newOption) {
